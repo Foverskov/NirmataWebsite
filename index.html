@@ -8,6 +8,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Add this right after the opening <body> tag -->
+  <div id="cookie-consent" class="cookie-banner">
+    <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+    <div class="cookie-buttons">
+        <button id="accept-cookies">Accept</button>
+        <button id="decline-cookies">Decline</button>
+    </div>
+  </div>
+
   <!-- Header / Navigation -->
   <header class="header">
     <nav class="navbar">
@@ -47,21 +56,32 @@
     <div class="container">
       <h2>About Nirmata</h2>
       <p>
-        We are Nirmata, a modern heavy rock band dedicated to 
-        creating immersive musical experiences. Our journey started in 2023
-        when they decided to combine their passion for music and 
-        performance. Since then, we've toured the world, played countless gigs, 
-        and connected with amazing fans everywhere.
+        Nirmata is a Copenhagen-based modern heavy rock band formed in 2023. 
+        Drawing inspiration from diverse musical influences, we create a unique 
+        sound that combines powerful riffs, dynamic rhythms, and emotionally charged lyrics.
+      </p>
+      <p>
+        Our music explores themes of personal growth, societal challenges, and human connection, 
+        delivered through an energetic live performance that engages audiences across Denmark 
+        and beyond. With our debut singles gaining traction and a growing fanbase, 
+        we're excited to share our musical journey with listeners worldwide.
       </p>
     </div>
   </section>
   <!-- MUSIC SECTION-->
-   <section id= "releases" class="release-section">
+   <section id="releases" class="release-section">
     <div class="container">
         <h2>Listen to our music</h2>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7dRn4DDzSEYPvcT6Ugx0dB?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4aQOGLRqFsAsUQhxBAHgSv?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0vEdX9KpT36waoGBgYEIy1?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="no-consent-message" style="display: none;">
+            <p>To listen to our music directly on the website, please accept cookies. 
+               Alternatively, you can find us on 
+               <a href="https://open.spotify.com/artist/YOUR_ARTIST_ID" target="_blank">Spotify</a>.</p>
+        </div>
+        <div class="spotify-embeds">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7dRn4DDzSEYPvcT6Ugx0dB?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4aQOGLRqFsAsUQhxBAHgSv?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0vEdX9KpT36waoGBgYEIy1?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
     </div>
    </section>
 
@@ -86,6 +106,16 @@
         </li>
         <!-- You can add more events by copying the li.event-item structure -->
       </ul>
+    </div>
+  </section>
+
+  <!-- Instagram Section -->
+  <section id="instagram" class="instagram-section">
+    <div class="container">
+        <h2>Latest Posts</h2>
+        <div id="instagram-feed" class="instagram-feed">
+            <!-- Posts will be loaded here -->
+        </div>
     </div>
   </section>
 
