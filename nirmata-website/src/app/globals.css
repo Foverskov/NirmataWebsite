@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  /* Nirmata Brand Colors */
+  --nirmata-dark: #121212;
+  --nirmata-dark-secondary: #1a1a1a;
+  --nirmata-gray: #222;
+  --nirmata-gray-light: #2a2a2a;
+  --nirmata-text: #e0e0e0;
+  --nirmata-blue: #3b82f6;
+  --nirmata-blue-dark: #2563eb;
+  
+  /* EPK Artistic Colors */
+  --epk-black: #000000;
+  --epk-gold: #ffd700;
+  --epk-gold-muted: #d4af37;
+  --epk-cyan: #22d3ee;
+  --epk-cyan-dark: #0891b2;
+  
+  /* Legacy support */
+  --background: #121212;
+  --foreground: #e0e0e0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* High Integration Design System */
+
+/* Unified Button System */
+.btn-nirmata {
+  @apply bg-[var(--nirmata-blue)] hover:bg-[var(--nirmata-blue-dark)] text-white px-6 py-3 rounded-lg transition-colors duration-300 font-medium;
+}
+
+.btn-epk {
+  @apply bg-gradient-to-r from-[var(--epk-cyan)] to-[var(--nirmata-blue)] hover:from-[var(--epk-cyan-dark)] hover:to-[var(--nirmata-blue-dark)] text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium;
+}
+
+/* Unified Card System */
+.card-nirmata {
+  @apply bg-[var(--nirmata-gray)] border border-[var(--nirmata-gray-light)] rounded-lg p-6 hover:bg-[var(--nirmata-gray-light)] transition-colors duration-300;
+}
+
+.card-epk {
+  @apply bg-black/70 border border-cyan-900/30 hover:border-cyan-500/30 rounded-2xl p-8 backdrop-blur-sm transition-all duration-300 hover:bg-black/80;
+}
+
+/* Typography System */
+.heading-nirmata {
+  @apply font-bold text-[var(--nirmata-text)] tracking-wide;
+}
+
+.heading-epk {
+  @apply font-bold text-white tracking-wider;
+}
+
+.text-gradient-nirmata {
+  @apply bg-gradient-to-r from-[var(--nirmata-blue)] to-[var(--epk-gold)] bg-clip-text text-transparent;
+}
+
+.text-gradient-epk {
+  @apply bg-gradient-to-r from-[var(--epk-cyan)] to-[var(--epk-gold)] bg-clip-text text-transparent;
+}
+
+/* EPK-specific Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.8s ease-out;
+}
+
+.animate-fade-in-delayed {
+  animation: fadeIn 0.8s ease-in-out 0.3s both;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .card-epk {
+    @apply p-6;
+  }
+}
