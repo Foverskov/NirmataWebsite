@@ -10,6 +10,23 @@ interface PerformanceMetrics {
   ttfb?: number;
 }
 
+// Extend PerformanceEntry for First Input Delay
+interface FIDEntry extends PerformanceEntry {
+  processingStart: number;
+}
+
+// Extend PerformanceEntry for Layout Shift
+interface CLSEntry extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
+}
+
+// Extend PerformanceEntry for Navigation
+interface NavigationEntry extends PerformanceEntry {
+  responseStart: number;
+  requestStart: number;
+}
+
 export function PerformanceMonitor() {
   useEffect(() => {
     const metrics: PerformanceMetrics = {};
@@ -23,7 +40,7 @@ export function PerformanceMonitor() {
 
     // First Input Delay
     const fidObserver = new PerformanceObserver((list) => {
-      const entries = list.getEntries() as any[];
+      const entries = list.getEntries() as FIDEntry[];
       entries.forEach((entry) => {
         metrics.fid = entry.processingStart - entry.startTime;
       });
@@ -32,7 +49,7 @@ export function PerformanceMonitor() {
     // Cumulative Layout Shift
     const clsObserver = new PerformanceObserver((list) => {
       let clsValue = 0;
-      const entries = list.getEntries() as any[];
+      const entries = list.getEntries() as CLSEntry[];
       entries.forEach((entry) => {
         if (!entry.hadRecentInput) {
           clsValue += entry.value;
@@ -44,12 +61,14 @@ export function PerformanceMonitor() {
     // First Contentful Paint & Time to First Byte
     const navigationObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      entries.forEach((entry: any) => {
+      entries.forEach((entry) => {
         if (entry.name === 'first-contentful-paint') {
           metrics.fcp = entry.startTime;
         }
-        if (entry.responseStart) {
-          metrics.ttfb = entry.responseStart - entry.requestStart;
+        // Check if it's a navigation entry for TTFB
+        const navEntry = entry as NavigationEntry;
+        if (navEntry.responseStart && navEntry.requestStart) {
+          metrics.ttfb = navEntry.responseStart - navEntry.requestStart;
         }
       });
     });

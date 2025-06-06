@@ -98,9 +98,9 @@ export class BrowserCompatibility {
       script.src = 'https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2';
       script.async = true;
       script.onload = () => {
-        // @ts-ignore
+        // @ts-expect-error - cssVars is added by external polyfill
         if (window.cssVars) {
-          // @ts-ignore
+          // @ts-expect-error - cssVars function is added by external polyfill
           window.cssVars();
         }
       };

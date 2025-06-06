@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }
 
@@ -13,7 +13,7 @@ interface EPKAnalyticsEvent {
   action: string;
   section?: string;
   value?: number;
-  custom_parameters?: Record<string, any>;
+  custom_parameters?: Record<string, string | number | boolean>;
 }
 
 export function EPKAnalytics() {
@@ -36,8 +36,8 @@ export function EPKAnalytics() {
 
       // Initialize gtag
       window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag() {
-        window.dataLayer!.push(arguments);
+      window.gtag = function gtag(...args: unknown[]) {
+        window.dataLayer!.push(args);
       };
       window.gtag('js', new Date());
       window.gtag('config', GA_MEASUREMENT_ID, {
@@ -76,8 +76,8 @@ export function EPKAnalytics() {
     });
 
     // Track scroll events
-    let scrollThresholds = [25, 50, 75, 100];
-    let trackedThresholds = new Set<number>();
+    const scrollThresholds = [25, 50, 75, 100];
+    const trackedThresholds = new Set<number>();
 
     const handleScroll = () => {
       const scrollPercent = Math.round(
