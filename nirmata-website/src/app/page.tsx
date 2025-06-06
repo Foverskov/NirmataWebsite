@@ -72,7 +72,7 @@ export default function Home() {
         <nav className="flex justify-between items-center p-4 max-w-6xl mx-auto">
           <div className="logo">
             <Image
-              src="/logo.png"
+              src="/nirmata_logo.svg"
               alt="Nirmata Logo"
               width={120}
               height={60}
@@ -137,14 +137,14 @@ export default function Home() {
           sizes="100vw"
         />
         {/* Logo content */}
-        <div className="relative z-20 text-center">
+        <div className="relative z-20 text-center transform -translate-y-5">
           <Image
-            src="/logo.png"
-            alt="Nirmata Logo"
-            width={300}
-            height={150}
-            className="invert mx-auto"
-            priority
+        src="/nirmata_logo.svg"
+        alt="Nirmata Logo"
+        width={375}
+        height={185}
+        className="invert mx-auto w-64 h-auto sm:w-[375px]"
+        priority
           />
         </div>
       </section>

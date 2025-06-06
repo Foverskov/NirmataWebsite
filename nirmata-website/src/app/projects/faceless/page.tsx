@@ -116,9 +116,14 @@ export default function FacelessEPK() {
         
         <div className="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fadeIn">
           <div className="mb-6 animate-slideDown text-center">
-            <h1 className='text-2xl md:text-5xl text-nirmata-light tracking-widest'>
-              N I R M A T A 
-            </h1>
+            <Image 
+              src="/nirmata_logo.svg" 
+              alt="NIRMATA Logo" 
+              width={300}
+              height={120}
+              className="mx-auto invert"
+              priority
+            />
             <h2 className='text-lg md:text-2xl text-center text-gray-400 tracking-wide mt-2'>
               X
             </h2>
