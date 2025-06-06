@@ -151,20 +151,26 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">About Nirmata</h2>
-          <div className="space-y-6 text-lg leading-relaxed">
-            <p>
-              Nirmata is a Copenhagen-based modern heavy rock band formed in 2023. 
-              Drawing inspiration from diverse musical influences, we create a unique 
-              sound that combines powerful riffs, dynamic rhythms, and emotionally charged lyrics.
-            </p>
-            <p>
-              Our music explores themes of personal growth, societal challenges, and human connection, 
-              delivered through an energetic live performance that engages audiences across Denmark 
-              and beyond. With our debut singles gaining traction and a growing fanbase, 
-              we&apos;re excited to share our musical journey with listeners worldwide.
-            </p>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-left mb-12">About Nirmata</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Our Journey</h3>
+              <p className="text-lg leading-relaxed">
+                Our music explores themes of personal growth, societal challenges, and human connection, 
+                delivered through an energetic live performance that engages audiences across Denmark 
+                and beyond. With our debut singles gaining traction and a growing fanbase, 
+                we&apos;re excited to share our musical journey with listeners worldwide.
+              </p>
+            </div>
+            <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Our Sound</h3>
+              <p className="text-lg leading-relaxed">
+                Nirmata is a Copenhagen-based modern heavy rock band formed in 2023. 
+                Drawing inspiration from diverse musical influences, we create a unique 
+                sound that combines powerful riffs, dynamic rhythms, and emotionally charged lyrics.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -172,7 +178,7 @@ export default function Home() {
       {/* Music Section */}
       <section id="releases" className="py-20 px-4 bg-[#1a1a1a]">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-8">Listen to our music</h2>
+          <h2 className="text-4xl font-bold text-left mb-8">Listen to our music</h2>
           
           {cookieConsent === 'declined' && (
             <div className="text-center mb-8 p-6 bg-[#2a2a2a] rounded-lg">
@@ -226,7 +232,7 @@ export default function Home() {
       {/* Events Section */}
       <section id="events" className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">We&apos;re playing:</h2>
+          <h2 className="text-4xl font-bold text-left mb-12">We&apos;re playing:</h2>
           <div className="space-y-6">
             <a 
               href="https://www.facebook.com/events/1345915849727062/" 
