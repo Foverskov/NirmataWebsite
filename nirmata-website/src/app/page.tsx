@@ -71,13 +71,8 @@ export default function Home() {
       <header className={`fixed top-0 left-0 right-0 bg-[#222] z-40 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
         <nav className="flex justify-between items-center p-4 max-w-6xl mx-auto">
           <div className="logo">
-            <Image
-              src="/Nirmata_Logo.svg"
-              alt="Nirmata Logo"
-              width={120}
-              height={60}
-              className="invert"
-            />
+            <img src="/Nirmata_Logo.svg" alt="Nirmata Logo" className="invert" width={120} height={60} />
+
           </div>
           
           {/* Desktop Navigation */}
