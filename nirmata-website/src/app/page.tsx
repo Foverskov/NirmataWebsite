@@ -72,7 +72,7 @@ export default function Home() {
         <nav className="flex justify-between items-center p-4 max-w-6xl mx-auto">
           <div className="logo">
             <Image
-              src="/nirmata_logo.svg"
+              src="/Nirmata_Logo.svg"
               alt="Nirmata Logo"
               width={120}
               height={60}
