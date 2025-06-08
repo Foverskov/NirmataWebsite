@@ -134,7 +134,7 @@ export default function Home() {
         {/* Logo content */}
         <div className="relative z-20 text-center transform -translate-y-5">
           <Image
-        src="/nirmata_logo.svg"
+        src="/Nirmata_Logo.svg"
         alt="Nirmata Logo"
         width={375}
         height={185}
