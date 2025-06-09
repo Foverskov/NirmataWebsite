@@ -223,7 +223,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold mb-4">Our Journey</h3>
               <RevealOnScrollPercent
                 showAtPercent={20}
-                triggerType="scrollPercent"
+                // triggerType={"scrollPercent"}
               >
                 <p className="text-lg leading-relaxed">
                   Our music explores themes of personal growth, societal
@@ -239,7 +239,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold mb-4">Our Sound</h3>
               <RevealOnScrollPercent
                 showAtPercent={20}
-                triggerType="scrollPercent"
+                // triggerType={"scrollPercent"}
               >
                 <p className="text-lg leading-relaxed">
                   Nirmata is a Copenhagen-based modern heavy rock band formed in
@@ -303,7 +303,7 @@ export default function Home() {
                   width="100%"
                   height="152"
                   frameBorder="0"
-                  allowFullScreen=""
+                  allowFullScreen={false}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                 ></iframe>
@@ -313,7 +313,7 @@ export default function Home() {
                   width="100%"
                   height="152"
                   frameBorder="0"
-                  allowFullScreen=""
+                  allowFullScreen={false}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                 ></iframe>
@@ -325,7 +325,7 @@ export default function Home() {
                   width="100%"
                   height="152"
                   frameBorder="0"
-                  allowFullScreen=""
+                  allowFullScreen={false}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                 ></iframe>
@@ -335,7 +335,7 @@ export default function Home() {
                   width="100%"
                   height="152"
                   frameBorder="0"
-                  allowFullScreen
+                  allowFullScreen={false}
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                 ></iframe>
