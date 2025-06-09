@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, ReactNode } from 'react';
+import { useRef, useState, useEffect, ReactNode } from "react";
 
 interface ScrollPercentageProps {
   children: ReactNode;
@@ -7,11 +7,11 @@ interface ScrollPercentageProps {
   once?: boolean; // Only trigger once (default: true)
 }
 
-function RevealOnScrollPercent({ 
-  children, 
+function RevealOnScrollPercent({
+  children,
   showAtPercent,
   hideOnScrollBack = false,
-  once = true
+  once = true,
 }: ScrollPercentageProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState<boolean>(false);
@@ -29,10 +29,10 @@ function RevealOnScrollPercent({
       if (scrollPercent >= showAtPercent && (!once || !hasTriggered)) {
         setShow(true);
         setHasTriggered(true);
-        
+
         // Remove listener if it should only trigger once
         if (once) {
-          window.removeEventListener('scroll', handleScroll);
+          window.removeEventListener("scroll", handleScroll);
         }
       }
 
@@ -43,12 +43,12 @@ function RevealOnScrollPercent({
     };
 
     // Add scroll listener
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener("scroll", handleScroll);
+
     // Check initial scroll position
     handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [showAtPercent, hideOnScrollBack, once, hasTriggered]);
 
   return (
@@ -56,8 +56,8 @@ function RevealOnScrollPercent({
       ref={ref}
       style={{
         opacity: show ? 1 : 0,
-        transform: show ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+        transform: show ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.6s ease-out, transform 0.6s ease-out",
       }}
     >
       {children}

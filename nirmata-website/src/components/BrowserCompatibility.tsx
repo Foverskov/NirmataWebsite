@@ -28,31 +28,34 @@ export class BrowserCompatibility {
   private detectBrowser() {
     const ua = navigator.userAgent;
     const info = {
-      name: 'unknown',
-      version: '0',
-      isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua),
+      name: "unknown",
+      version: "0",
+      isMobile:
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          ua,
+        ),
       supportsWebP: false,
-      supportsIntersectionObserver: 'IntersectionObserver' in window,
-      supportsCustomProperties: CSS.supports('color', 'var(--fake-var)')
+      supportsIntersectionObserver: "IntersectionObserver" in window,
+      supportsCustomProperties: CSS.supports("color", "var(--fake-var)"),
     };
 
     // Detect browser
-    if (ua.includes('Chrome')) {
-      info.name = 'chrome';
-      info.version = ua.match(/Chrome\/(\d+)/)?.[1] || '0';
-    } else if (ua.includes('Firefox')) {
-      info.name = 'firefox';
-      info.version = ua.match(/Firefox\/(\d+)/)?.[1] || '0';
-    } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-      info.name = 'safari';
-      info.version = ua.match(/Version\/(\d+)/)?.[1] || '0';
-    } else if (ua.includes('Edge')) {
-      info.name = 'edge';
-      info.version = ua.match(/Edge\/(\d+)/)?.[1] || '0';
+    if (ua.includes("Chrome")) {
+      info.name = "chrome";
+      info.version = ua.match(/Chrome\/(\d+)/)?.[1] || "0";
+    } else if (ua.includes("Firefox")) {
+      info.name = "firefox";
+      info.version = ua.match(/Firefox\/(\d+)/)?.[1] || "0";
+    } else if (ua.includes("Safari") && !ua.includes("Chrome")) {
+      info.name = "safari";
+      info.version = ua.match(/Version\/(\d+)/)?.[1] || "0";
+    } else if (ua.includes("Edge")) {
+      info.name = "edge";
+      info.version = ua.match(/Edge\/(\d+)/)?.[1] || "0";
     }
 
     // Test WebP support
-    this.testWebPSupport().then(supported => {
+    this.testWebPSupport().then((supported) => {
       info.supportsWebP = supported;
     });
 
@@ -65,7 +68,8 @@ export class BrowserCompatibility {
       webP.onload = webP.onerror = () => {
         resolve(webP.height === 2);
       };
-      webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+      webP.src =
+        "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
     });
   }
 
@@ -73,7 +77,7 @@ export class BrowserCompatibility {
     // Add browser-specific classes to body
     document.body.classList.add(`browser-${this.browserInfo.name}`);
     if (this.browserInfo.isMobile) {
-      document.body.classList.add('is-mobile');
+      document.body.classList.add("is-mobile");
     }
 
     // Polyfill for older browsers
@@ -86,16 +90,17 @@ export class BrowserCompatibility {
   private loadPolyfills() {
     // Intersection Observer polyfill for older browsers
     if (!this.browserInfo.supportsIntersectionObserver) {
-      const script = document.createElement('script');
-      script.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
+      const script = document.createElement("script");
+      script.src =
+        "https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver";
       script.async = true;
       document.head.appendChild(script);
     }
 
     // CSS Custom Properties polyfill for IE
     if (!this.browserInfo.supportsCustomProperties) {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2';
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2";
       script.async = true;
       script.onload = () => {
         // @ts-expect-error - cssVars is added by external polyfill
@@ -110,11 +115,11 @@ export class BrowserCompatibility {
 
   private applyCompatibilityFixes() {
     // Safari-specific fixes
-    if (this.browserInfo.name === 'safari') {
+    if (this.browserInfo.name === "safari") {
       // Fix for backdrop-filter on older Safari versions
       const safariVersion = parseInt(this.browserInfo.version);
       if (safariVersion < 14) {
-        const style = document.createElement('style');
+        const style = document.createElement("style");
         style.textContent = `
           .backdrop-blur-md {
             background-color: rgba(0, 0, 0, 0.8) !important;
@@ -126,9 +131,9 @@ export class BrowserCompatibility {
     }
 
     // Firefox-specific fixes
-    if (this.browserInfo.name === 'firefox') {
+    if (this.browserInfo.name === "firefox") {
       // Fix for smooth scrolling
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         html {
           scroll-behavior: smooth;
@@ -142,13 +147,15 @@ export class BrowserCompatibility {
       // Prevent iOS zoom on input focus
       const viewport = document.querySelector('meta[name="viewport"]');
       if (viewport) {
-        viewport.setAttribute('content', 
-          viewport.getAttribute('content') + ', maximum-scale=1.0, user-scalable=no'
+        viewport.setAttribute(
+          "content",
+          viewport.getAttribute("content") +
+            ", maximum-scale=1.0, user-scalable=no",
         );
       }
 
       // Fix for mobile viewport height
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         .min-h-screen {
           min-height: 100vh;
@@ -169,18 +176,19 @@ export class BrowserCompatibility {
       chrome: 80,
       firefox: 75,
       safari: 13,
-      edge: 80
+      edge: 80,
     };
 
     const browserVersion = parseInt(this.browserInfo.version);
-    const minVersion = requirements[this.browserInfo.name as keyof typeof requirements];
+    const minVersion =
+      requirements[this.browserInfo.name as keyof typeof requirements];
 
     return minVersion ? browserVersion >= minVersion : false;
   }
 
   showUnsupportedBrowserWarning() {
     if (!this.isSupported()) {
-      const warning = document.createElement('div');
+      const warning = document.createElement("div");
       warning.style.cssText = `
         position: fixed;
         top: 0;
@@ -207,22 +215,26 @@ export class BrowserCompatibility {
 // Initialize compatibility checker
 export function initializeBrowserCompatibility() {
   const compat = BrowserCompatibility.getInstance();
-  
+
   // Show warning for unsupported browsers
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     setTimeout(() => {
       compat.showUnsupportedBrowserWarning();
     }, 1000);
   }
-  
+
   return compat;
 }
 
 // React component for browser compatibility
-export function BrowserCompatibilityProvider({ children }: { children: React.ReactNode }) {
-  if (typeof window !== 'undefined') {
+export function BrowserCompatibilityProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  if (typeof window !== "undefined") {
     initializeBrowserCompatibility();
   }
-  
+
   return <>{children}</>;
 }

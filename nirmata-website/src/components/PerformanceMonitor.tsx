@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface PerformanceMetrics {
   lcp?: number;
@@ -62,7 +62,7 @@ export function PerformanceMonitor() {
     const navigationObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach((entry) => {
-        if (entry.name === 'first-contentful-paint') {
+        if (entry.name === "first-contentful-paint") {
           metrics.fcp = entry.startTime;
         }
         // Check if it's a navigation entry for TTFB
@@ -74,21 +74,21 @@ export function PerformanceMonitor() {
     });
 
     try {
-      lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-      fidObserver.observe({ entryTypes: ['first-input'] });
-      clsObserver.observe({ entryTypes: ['layout-shift'] });
-      navigationObserver.observe({ entryTypes: ['navigation', 'paint'] });
+      lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
+      fidObserver.observe({ entryTypes: ["first-input"] });
+      clsObserver.observe({ entryTypes: ["layout-shift"] });
+      navigationObserver.observe({ entryTypes: ["navigation", "paint"] });
     } catch (error) {
-      console.warn('Performance monitoring not supported:', error);
+      console.warn("Performance monitoring not supported:", error);
     }
 
     // Report metrics after page load
     const reportMetrics = () => {
       // In production, you could send these to analytics
-      console.log('EPK Performance Metrics:', metrics);
-      
+      console.log("EPK Performance Metrics:", metrics);
+
       // Optional: Send to analytics service
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === "production") {
         // Example: sendToAnalytics(metrics);
       }
     };
@@ -112,7 +112,7 @@ export function PerformanceMonitor() {
 export function usePerformanceMonitor(componentName: string) {
   useEffect(() => {
     const startTime = performance.now();
-    
+
     return () => {
       const endTime = performance.now();
       const renderTime = endTime - startTime;

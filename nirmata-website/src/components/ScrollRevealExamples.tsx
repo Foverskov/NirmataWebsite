@@ -1,12 +1,11 @@
-import React from 'react';
-import RevealOnScroll from './RevealOnScroll';
-import RevealOnScrollPercent from './RevealOnScrollPercent';
+import React from "react";
+import RevealOnScroll from "./RevealOnScroll";
+import RevealOnScrollPercent from "./RevealOnScrollPercent";
 
 // Example usage of both components
 function ScrollRevealExamples() {
   return (
     <div className="space-y-20 py-20">
-      
       {/* Original intersection observer approach */}
       <RevealOnScroll triggerType="intersection" showAtPercent={30}>
         <div className="bg-blue-500/20 p-8 rounded-lg border border-blue-500/30">
@@ -24,13 +23,15 @@ function ScrollRevealExamples() {
       </RevealOnScrollPercent>
 
       {/* Scroll percentage - shows at 50% and hides when scrolling back */}
-      <RevealOnScrollPercent 
-        showAtPercent={50} 
+      <RevealOnScrollPercent
+        showAtPercent={50}
         hideOnScrollBack={true}
         once={false}
       >
         <div className="bg-green-500/20 p-8 rounded-lg border border-green-500/30">
-          <h3 className="text-2xl font-bold mb-4">50% Page Scrolled (Reversible)</h3>
+          <h3 className="text-2xl font-bold mb-4">
+            50% Page Scrolled (Reversible)
+          </h3>
           <p>This shows at 50% scroll and hides when you scroll back up</p>
         </div>
       </RevealOnScrollPercent>
@@ -46,8 +47,13 @@ function ScrollRevealExamples() {
       {/* Using the unified component with scroll percentage */}
       <RevealOnScroll triggerType="scrollPercent" showAtPercent={90}>
         <div className="bg-yellow-500/20 p-8 rounded-lg border border-yellow-500/30">
-          <h3 className="text-2xl font-bold mb-4">90% Page Scrolled (Unified Component)</h3>
-          <p>This uses the unified RevealOnScroll component with scroll percentage trigger</p>
+          <h3 className="text-2xl font-bold mb-4">
+            90% Page Scrolled (Unified Component)
+          </h3>
+          <p>
+            This uses the unified RevealOnScroll component with scroll
+            percentage trigger
+          </p>
         </div>
       </RevealOnScroll>
 
@@ -55,10 +61,13 @@ function ScrollRevealExamples() {
       <div className="space-y-8">
         {Array.from({ length: 10 }, (_, i) => (
           <div key={i} className="bg-gray-800/50 p-6 rounded-lg">
-            <h4 className="text-lg font-semibold mb-2">Content Block {i + 1}</h4>
+            <h4 className="text-lg font-semibold mb-2">
+              Content Block {i + 1}
+            </h4>
             <p className="text-gray-400">
-              This is some content to make the page longer so you can test the scroll percentage triggers.
-              Keep scrolling to see the different reveal animations in action!
+              This is some content to make the page longer so you can test the
+              scroll percentage triggers. Keep scrolling to see the different
+              reveal animations in action!
             </p>
           </div>
         ))}
