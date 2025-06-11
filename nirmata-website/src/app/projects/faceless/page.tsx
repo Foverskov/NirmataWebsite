@@ -128,7 +128,7 @@ export default function FacelessEPK() {
         <div className="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fadeIn">
           <div className="mb-6 animate-slideDown text-center">
             <Image
-              src="/nirmata_logo.svg"
+              src="/Nirmata_Logo.svg"
               alt="NIRMATA Logo"
               width={300}
               height={120}
