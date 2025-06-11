@@ -221,10 +221,17 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Our Journey</h3>
-              <RevealOnScrollPercent
-                showAtPercent={20}
-                // triggerType={"scrollPercent"}
-              >
+              <RevealOnScrollPercent showAtPercent={20} >
+                <p className="text-lg leading-relaxed">
+                  NIRMATA released one three-track EP in 2023, consisting of Empire, Bloom and Circles. 
+                  During the year of 2024 they wrote and recorded their debut album with Oliver Tue, who produced, mixed and mastered the project. Sessions have taken place at Evergreenstudios, the band’s creative home base.
+                  The result, Averno, is shaping up to be a bold, dynamic album rooted in modern rock and metal. The album is set to be released on 5th of September 2025. 
+                </p>
+              </RevealOnScrollPercent>
+            </div>
+            <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+              <h3 className="text-2xl font-bold mb-4">Our Story</h3>
+              <RevealOnScrollPercent showAtPercent={20} >
                 <p className="text-lg leading-relaxed">
                   Our music explores themes of personal growth, societal
                   challenges, and human connection, delivered through an
@@ -237,15 +244,11 @@ export default function Home() {
             </div>
             <div className="bg-[#1a1a1a] p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
               <h3 className="text-2xl font-bold mb-4">Our Sound</h3>
-              <RevealOnScrollPercent
-                showAtPercent={20}
-                // triggerType={"scrollPercent"}
-              >
+              <RevealOnScrollPercent showAtPercent={20}>
                 <p className="text-lg leading-relaxed">
-                  Nirmata is a Copenhagen-based modern heavy rock band formed in
-                  2023. Drawing inspiration from diverse musical influences, we
-                  create a unique sound that combines powerful riffs, dynamic
-                  rhythms, and emotionally charged lyrics.
+                  NIRMATA delivers a unique blend of raw emotion and heavy grooves. Combining the intensity of modern heavy rock with the nostalgic, riff-heavy vibe.
+                  The music is inspired by film, history, religion & artists like Karnivool, Mastodon, Black Peaks, and Dizzy Mizz Lizzy.
+                  It’s powerful, melancholic and honest.
                 </p>
               </RevealOnScrollPercent>
             </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import { Music, Users, Users2, Home } from "lucide-react";
+import { Music, Users, Users2,} from "lucide-react";
 import { useState, useEffect } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { usePerformanceMonitor } from "../../../components/PerformanceMonitor";
 
@@ -12,16 +12,27 @@ export default function FacelessEPK() {
 
   const [showHero, setShowHero] = useState(true);
 
-  // Smooth scroll function for navigation
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
+  // Fallback to auto-dismiss hero after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (showHero) {
+        setShowHero(false);
+      }
+    }, 10000); // 10 seconds fallback
+
+    return () => clearTimeout(timer);
+  }, [showHero]);
+
+  // // Smooth scroll function for navigation
+  // const scrollToSection = (sectionId: string) => {
+  //   const element = document.getElementById(sectionId);
+  //   if (element) {
+  //     element.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start",
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     // Preload critical images for better performance
@@ -36,81 +47,54 @@ export default function FacelessEPK() {
       });
     };
     preloadImages();
+  }, []);
 
+  useEffect(() => {
     // Prevent body scroll when hero is visible
     if (showHero) {
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed"; // Prevent iOS bounce
+      document.body.style.width = "100%";
     } else {
       document.body.style.overflow = "unset";
+      document.body.style.position = "unset";
+      document.body.style.width = "unset";
     }
 
-    // Also listen for scroll to hide hero immediately
+    // Cleanup function to ensure overflow is reset
+    return () => {
+      document.body.style.overflow = "unset";
+      document.body.style.position = "unset";
+      document.body.style.width = "unset";
+    };
+  }, [showHero]);
+
+  useEffect(() => {
+    // Scroll handler - only add when hero is visible
+    if (!showHero) return;
+
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      console.log("Scroll detected:", window.scrollY); // Debug log
+      if (window.scrollY > 50) { // Reduced threshold for faster response
+        console.log("Hiding hero section"); // Debug log
         setShowHero(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Use passive listener for better performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      document.body.style.overflow = "unset";
     };
   }, [showHero]);
 
   return (
     <div className="bg-black text-white">
-      {/* Discrete Return Navigation - Fixed Position */}
-      <div
-        className={`fixed top-4 left-4 z-50 transition-opacity duration-500 ${showHero ? "opacity-0" : "opacity-100"}`}
-      >
-        <Link
-          href="/"
-          className="btn-nirmata p-3 rounded-full backdrop-blur-md bg-nirmata-dark/80 hover:bg-nirmata-primary/20 border border-nirmata-primary/30 hover:border-nirmata-primary/50 transition-all duration-300 group"
-          title="Return to Nirmata Main Site"
-        >
-          <Home className="w-5 h-5 text-nirmata-primary group-hover:text-white transition-colors duration-300" />
-        </Link>
-      </div>
-
-      {/* EPK Unique Navigation - Fixed Position */}
-      <div
-        className={`fixed top-4 right-4 z-50 transition-opacity duration-500 ${showHero ? "opacity-0" : "opacity-100"}`}
-      >
-        <nav
-          className="flex gap-2 backdrop-blur-md bg-nirmata-dark/80 p-2 rounded-2xl border border-epk-cyan/30"
-          role="navigation"
-          aria-label="EPK Navigation"
-        >
-          <button
-            onClick={() => scrollToSection("listen")}
-            className="btn-epk px-4 py-2 text-sm rounded-xl hover:bg-epk-cyan/20 hover:text-epk-cyan transition-all duration-300"
-            aria-label="Navigate to Listen section"
-          >
-            Listen
-          </button>
-          <button
-            onClick={() => scrollToSection("about")}
-            className="btn-epk px-4 py-2 text-sm rounded-xl hover:bg-epk-cyan/20 hover:text-epk-cyan transition-all duration-300"
-            aria-label="Navigate to About section"
-          >
-            About
-          </button>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="btn-epk px-4 py-2 text-sm rounded-xl hover:bg-epk-cyan/20 hover:text-epk-cyan transition-all duration-300"
-            aria-label="Navigate to Contact section"
-          >
-            Contact
-          </button>
-        </nav>
-      </div>
-
       {/* Hero Section - Only shows on initial load */}
       <div
         className={`fixed inset-0 z-40 min-h-screen flex items-center justify-center overflow-hidden transition-all duration-1000 bg-black cursor-pointer ${
-          showHero ? "opacity-100 visible" : "opacity-0 invisible"
+          showHero ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
         }`}
         onClick={() => setShowHero(false)}
       >
@@ -201,7 +185,7 @@ export default function FacelessEPK() {
               className="min-h-screen flex items-center justify-center bg-gradient-to-b from-transparent to-black/20 px-12"
             >
               <div className="w-full max-w-2xl">
-                <h3 className="text-3xl font-bold mb-8 text-epk-cyan">
+                <h3 className="text-3xl font-bold mb-8 text-left text-epk-cyan">
                   Listen Now
                 </h3>
                 <iframe
@@ -213,84 +197,6 @@ export default function FacelessEPK() {
                     border: "1px solid rgba(255, 255, 255, 0.12)",
                   }}
                 ></iframe>
-              </div>
-            </div>
-
-            {/* Credits Section */}
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-12">
-              <div className="w-full max-w-2xl">
-                <div className="card-epk p-8">
-                  <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
-                    <Users2 className="w-8 h-8" />
-                    Credits
-                  </h3>
-                  <div className="space-y-6">
-                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                        Authors
-                      </h4>
-                      <p className="text-gray-300">
-                        Victor Isager Høvring, Ross James McPherson
-                      </p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                        Composers
-                      </h4>
-                      <p className="text-gray-300">
-                        Andreas Ahrenst Foverskov, <br />
-                        Victor Isager Høvring, <br />
-                        Jacob Vejter Ottosen, <br />
-                        Ross James McPherson, <br />
-                        Oliver Tue Lundquist Møller
-                      </p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                        Production
-                      </h4>
-                      <p className="text-gray-300">
-                        Recording, Mix & Master: Oliver Tue Lundquist Møller
-                      </p>
-                      <p className="text-gray-300">
-                        Cover Artwork: Ross James McPherson
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Release Details Section */}
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-transparent to-black/20 px-12">
-              <div className="w-full max-w-2xl">
-                <div className="card-epk p-8">
-                  <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
-                    <Music className="w-8 h-8" />
-                    Release Details
-                  </h3>
-                  <div className="space-y-6">
-                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                        Timeline
-                      </h4>
-                      <p className="text-gray-300">Written & Recorded: 2024</p>
-                      <p className="text-gray-300">
-                        Release Date: June 6, 2025
-                      </p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                        Publishing
-                      </h4>
-                      <p className="text-gray-300">Label: LAST MILE RECORDS</p>
-                      <p className="text-gray-300">
-                        Publisher: LAST MILE SONGS
-                      </p>
-                      <p className="text-gray-300">ISRC: DK-B2I-24-00401</p>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -434,7 +340,7 @@ export default function FacelessEPK() {
                   </div>
                   <div className="space-y-6 mt-8">
                     <p className="text-gray-300 leading-relaxed">
-                      NIRMATA is a new modern rock project based in Copenhagen,
+                      NIRMATA is a modern rock project based in Copenhagen,
                       Denmark, blending powerful vocals with captivating,
                       melodic riffs and thunderous drums.
                     </p>
@@ -458,6 +364,84 @@ export default function FacelessEPK() {
                 </div>
               </div>
             </div>
+            {/* Credits Section */}
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-12">
+              <div className="w-full max-w-2xl">
+                <div className="card-epk p-8">
+                  <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
+                    <Users2 className="w-8 h-8" />
+                    Credits
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                        Authors
+                      </h4>
+                      <p className="text-gray-300">
+                        Victor Isager Høvring, Ross James McPherson
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                        Composers
+                      </h4>
+                      <p className="text-gray-300">
+                        Andreas Ahrenst Foverskov, <br />
+                        Victor Isager Høvring, <br />
+                        Jacob Vejter Ottosen, <br />
+                        Ross James McPherson, <br />
+                        Oliver Tue Lundquist Møller
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                        Production
+                      </h4>
+                      <p className="text-gray-300">
+                        Recording, Mix & Master: Oliver Tue Lundquist Møller
+                      </p>
+                      <p className="text-gray-300">
+                        Cover Artwork: Ross James McPherson
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Release Details Section */}
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-transparent to-black/20 px-12">
+              <div className="w-full max-w-2xl">
+                <div className="card-epk p-8">
+                  <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
+                    <Music className="w-8 h-8" />
+                    Release Details
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                        Timeline
+                      </h4>
+                      <p className="text-gray-300">Written & Recorded: 2024</p>
+                      <p className="text-gray-300">
+                        Release Date: June 6, 2025
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                      <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                        Publishing
+                      </h4>
+                      <p className="text-gray-300">Label: LAST MILE RECORDS</p>
+                      <p className="text-gray-300">
+                        Publisher: LAST MILE SONGS
+                      </p>
+                      <p className="text-gray-300">ISRC: DK-B2I-24-00401</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -480,7 +464,7 @@ export default function FacelessEPK() {
         {/* Track Player Section */}
         <div className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm">
           <div className="container mx-auto px-4 max-w-2xl">
-            <h3 className="text-3xl font-bold mb-8 text-epk-cyan text-center">
+            <h3 className="text-3xl font-bold mb-8 text-epk-cyan text-left">
               Listen Now
             </h3>
             <iframe
@@ -492,80 +476,6 @@ export default function FacelessEPK() {
                 border: "1px solid rgba(255, 255, 255, 0.12)",
               }}
             ></iframe>
-          </div>
-        </div>
-
-        {/* Credits Section */}
-        <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <div className="card-epk p-8">
-              <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
-                <Users2 className="w-8 h-8" />
-                Credits
-              </h3>
-              <div className="space-y-6">
-                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                    Authors
-                  </h4>
-                  <p className="text-gray-300">
-                    Victor Isager Høvring, Ross James McPherson
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                    Composers
-                  </h4>
-                  <p className="text-gray-300">
-                    Andreas Ahrenst Foverskov, <br />
-                    Victor Isager Høvring, <br />
-                    Jacob Vejter Ottosen, <br />
-                    Ross James McPherson, <br />
-                    Oliver Tue Lundquist Møller
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                    Production
-                  </h4>
-                  <p className="text-gray-300">
-                    Recording, Mix & Master: Oliver Tue Lundquist Møller
-                  </p>
-                  <p className="text-gray-300">
-                    Cover Artwork: Ross James McPherson
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Release Details Section */}
-        <div className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <div className="card-epk p-8">
-              <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
-                <Music className="w-8 h-8" />
-                Release Details
-              </h3>
-              <div className="space-y-6">
-                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                    Timeline
-                  </h4>
-                  <p className="text-gray-300">Written & Recorded: 2024</p>
-                  <p className="text-gray-300">Release Date: June 6, 2025</p>
-                </div>
-                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
-                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
-                    Publishing
-                  </h4>
-                  <p className="text-gray-300">Label: LAST MILE RECORDS</p>
-                  <p className="text-gray-300">Publisher: LAST MILE SONGS</p>
-                  <p className="text-gray-300">ISRC: DK-B2I-24-00401</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -729,6 +639,80 @@ export default function FacelessEPK() {
             </div>
           </div>
         </div>
+        {/* Credits Section */}
+        <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <div className="card-epk p-8">
+              <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
+                <Users2 className="w-8 h-8" />
+                Credits
+              </h3>
+              <div className="space-y-6">
+                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                    Authors
+                  </h4>
+                  <p className="text-gray-300">
+                    Victor Isager Høvring, Ross James McPherson
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                    Composers
+                  </h4>
+                  <p className="text-gray-300">
+                    Andreas Ahrenst Foverskov, <br />
+                    Victor Isager Høvring, <br />
+                    Jacob Vejter Ottosen, <br />
+                    Ross James McPherson, <br />
+                    Oliver Tue Lundquist Møller
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                    Production
+                  </h4>
+                  <p className="text-gray-300">
+                    Recording, Mix & Master: Oliver Tue Lundquist Møller
+                  </p>
+                  <p className="text-gray-300">
+                    Cover Artwork: Ross James McPherson
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Release Details Section */}
+        <div className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <div className="card-epk p-8">
+              <h3 className="text-3xl font-bold mb-8 text-epk-cyan flex items-center gap-3">
+                <Music className="w-8 h-8" />
+                Release Details
+              </h3>
+              <div className="space-y-6">
+                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                    Timeline
+                  </h4>
+                  <p className="text-gray-300">Written & Recorded: 2024</p>
+                  <p className="text-gray-300">Release Date: June 6, 2025</p>
+                </div>
+                <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                  <h4 className="text-lg font-semibold mb-3 text-epk-cyan">
+                    Publishing
+                  </h4>
+                  <p className="text-gray-300">Label: LAST MILE RECORDS</p>
+                  <p className="text-gray-300">Publisher: LAST MILE SONGS</p>
+                  <p className="text-gray-300">ISRC: DK-B2I-24-00401</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* Contact & Social Media Section */}
