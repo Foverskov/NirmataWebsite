@@ -1,6 +1,6 @@
 "use client";
 
-import { icons, Music, Users } from "lucide-react";
+import { Music, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 // import Image from "next/image";
 import { usePerformanceMonitor } from "../../../components/PerformanceMonitor";
