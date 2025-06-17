@@ -1,6 +1,6 @@
 "use client";
 
-import { Music, Users } from "lucide-react";
+// import { Music, Users } from "lucide-react";
 
 interface ContactInfo {
   title: string;
@@ -34,7 +34,7 @@ export function ContactSection({
   return (
     <div
       id="contact"
-      className={`relative bg-gradient-to-b from-black/20 to-black py-20 backdrop-blur-sm overflow-hidden ${className}`}
+      className={`relative bg-gradient-to-b from-black to-blue-500 py-20 backdrop-blur-sm overflow-hidden ${className}`}
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
@@ -44,8 +44,8 @@ export function ContactSection({
       </div>
 
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
-        <div className="card-nirmata p-8 border-nirmata-primary/40 hover:border-nirmata-primary/60">
-          <h3 className="text-4xl md:text-5xl font-bold mb-12 text-center text-gradient-epk tracking-wider">
+        <div className="card-nirmata p-8 drop-shadow-blue-100 border-nirmata-primary/40 hover:border-nirmata-primary/60">
+          <h3 className="text-4xl md:text-5xl font-bold mb-12 text-center tracking-wider">
             CONTACT & CONNECT
           </h3>
 

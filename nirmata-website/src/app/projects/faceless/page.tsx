@@ -497,142 +497,25 @@ export default function FacelessEPK() {
                   className="object-cover rounded-lg shadow-2xl shadow-epk-cyan/20"
                 />
               </div>
-              {/* Band Members - Architectural Layout for Mobile */}
-              <div className="mt-12 flex justify-center">
-                <div className="flex gap-0 bg-black/30 backdrop-blur-sm border border-epk-cyan/20">
-                  {/* Victor Høvring - Vocals */}
-                  <div className="relative flex flex-col items-center justify-end h-64 w-20 bg-gradient-to-t from-black/60 to-transparent border-r border-epk-cyan/20 hover:from-epk-cyan/20 transition-all duration-500 group">
-                    <div className="absolute bottom-4 flex flex-col items-center">
-                      <div className="writing-mode-vertical text-gray-300 font-light text-xs tracking-widest mb-3 group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          VOCALS
-                        </span>
-                      </div>
-                      <div className="writing-mode-vertical text-white font-semibold text-sm tracking-wider group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          VICTOR HØVRING
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Andreas Foverskov - Guitar */}
-                  <div className="relative flex flex-col items-center justify-end h-64 w-20 bg-gradient-to-t from-black/60 to-transparent border-r border-epk-cyan/20 hover:from-epk-cyan/20 transition-all duration-500 group">
-                    <div className="absolute bottom-4 flex flex-col items-center">
-                      <div className="writing-mode-vertical text-gray-300 font-light text-xs tracking-widest mb-3 group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          GUITAR
-                        </span>
-                      </div>
-                      <div className="writing-mode-vertical text-white font-semibold text-sm tracking-wider group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          ANDREAS FOVERSKOV
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Ross McPherson - Bass */}
-                  <div className="relative flex flex-col items-center justify-end h-64 w-20 bg-gradient-to-t from-black/60 to-transparent border-r border-epk-cyan/20 hover:from-epk-cyan/20 transition-all duration-500 group">
-                    <div className="absolute bottom-4 flex flex-col items-center">
-                      <div className="writing-mode-vertical text-gray-300 font-light text-xs tracking-widest mb-3 group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          BASS
-                        </span>
-                      </div>
-                      <div className="writing-mode-vertical text-white font-semibold text-sm tracking-wider group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          ROSS MCPHERSON
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Jacob Ottosen - Drums */}
-                  <div className="relative flex flex-col items-center justify-end h-64 w-20 bg-gradient-to-t from-black/60 to-transparent hover:from-epk-cyan/20 transition-all duration-500 group">
-                    <div className="absolute bottom-4 flex flex-col items-center">
-                      <div className="writing-mode-vertical text-gray-300 font-light text-xs tracking-widest mb-3 group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          DRUMS
-                        </span>
-                      </div>
-                      <div className="writing-mode-vertical text-white font-semibold text-sm tracking-wider group-hover:text-epk-cyan transition-colors duration-300">
-                        <span
-                          className="rotate-180"
-                          style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
-                          }}
-                        >
-                          JACOB OTTOSEN
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="space-y-6 mt-8">
                 <p className="text-gray-300 leading-relaxed">
-                  NIRMATA is a new modern rock project based in Copenhagen,
-                  Denmark, blending powerful vocals with captivating, melodic
-                  riffs and thunderous drums.
-                </p>
+                  NIRMATA – Big, melodic rock from Copenhagen.
+                  </p>
                 <p className="text-gray-300 leading-relaxed">
-                  With a dynamic sound that covers both sensitive, melodic
-                  sections as well as anthemic, powerful choruses, listeners can
-                  expect to hear echoes of Karnivool, VOLA, Mastodon, Black
-                  Peaks, and Dizzy Mizz Lizzy.
+                    Formed in 2023, NIRMATA delivers a unique blend of raw emotion and heavy grooves.
+                    Combining the intensity of modern heavy rock with the nostalgic, riff-heavy vibe.
+                    The music is inspired by film, history, religion & artists like Karnivool, Mastodon, Black Peaks, and Dizzy Mizz Lizzy.
+                </p>
+                <p className="font-extralight tracking-widest italic shadow-md text-shadow-white">It&apos;s powerful, melancholic and honest.
                 </p>
                 <p className="text-gray-300 leading-relaxed">
                   In 2024, the band self-released 3 singles: Empire, Bloom, and
                   Circles - touching on themes of religion, exclusion, and
                   growth.
                 </p>
-                <p className="text-epk-cyan font-semibold">
+                <p className="">
                   NIRMATA will release their debut album
-                  <span className="text-epk-gold ml-2 mr-2"> AVERNO </span>
+                  <span className="text-blue-500 tracking-widest font-light italic"> AVERNO </span>
                   on August 8, 2025 through LAST MILE RECORDS.
                 </p>
               </div>

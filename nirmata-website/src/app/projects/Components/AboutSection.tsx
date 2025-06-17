@@ -2,7 +2,7 @@
 
 import { Users } from "lucide-react";
 import Image from "next/image";
-import { BandMemberCard } from "./BandMemberCard";
+// import { BandMemberCard } from "./BandMemberCardProps";
 
 interface BandMember {
   name: string;
@@ -19,12 +19,12 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ 
-  bandMembers, 
+  // bandMembers, 
   bandPhotoUrl, 
   description, 
   albumInfo, 
   className = "",
-  isMobile = false 
+  // isMobile = false 
 }: AboutSectionProps) {
   return (
     <div
@@ -39,7 +39,7 @@ export function AboutSection({
           </h3>
 
           {/* Band Photo */}
-          <div className="mb-8 relative h-64">
+          <div className="mb-8 relative h-100">
             <Image
               src={bandPhotoUrl}
               alt="NIRMATA Band Photo"
@@ -48,28 +48,22 @@ export function AboutSection({
             />
           </div>
 
-          {/* Band Members - Architectural Layout */}
-          <div className="mt-12 flex justify-center">
-            <div className="flex gap-0 bg-black/30 backdrop-blur-sm border border-epk-cyan/20">
-              {bandMembers.map((member, index) => (
-                <BandMemberCard
-                  key={member.name}
-                  name={member.name}
-                  instrument={member.instrument}
-                  isLast={index === bandMembers.length - 1}
-                  isMobile={isMobile}
-                />
-              ))}
-            </div>
-          </div>
-
           <div className="space-y-6 mt-8">
-            {description.map((paragraph, index) => (
-              <p key={index} className="text-gray-300 leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-            <p className="text-epk-cyan font-semibold" dangerouslySetInnerHTML={{ __html: albumInfo }} />
+            {description.map((paragraph, index) => {
+              // Check if paragraph contains HTML tags
+              if (paragraph.includes('<')) {
+                return (
+                  <div key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+                );
+              } else {
+                return (
+                  <p key={index} className="text-gray-100 leading-relaxed">
+                    {paragraph}
+                  </p>
+                );
+              }
+            })}
+            <div className="font-semibold" dangerouslySetInnerHTML={{ __html: albumInfo }} />
           </div>
         </div>
       </div>
