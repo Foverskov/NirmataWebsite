@@ -7,10 +7,8 @@ import { usePerformanceMonitor } from "../../../components/PerformanceMonitor";
 
 // Import all EPK components - Corrected paths
 import { HeroSection } from "../Components/herosection";
-import { ListenSection } from "../Components/listenSection";
 import { AboutSection } from "../Components/AboutSection";
-import { CreditsSection } from "../Components/CreditSection";
-import { ReleaseDetailsSection } from "../Components/ReleaseDetailsSection";
+import { SongMetaDataSection } from "../Components/SongMetaDataSection";
 import { ContactSection } from "../Components/ContactSection";
 import { DesktopLayout } from "../Components/desktopLayout";
 import { MobileLayout } from "../Components/mobileLayout";
@@ -187,7 +185,6 @@ export default function FacelessEPK() {
 
       {/* Desktop Layout */}
       <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
-        <ListenSection embedUrl={embedUrl} />
         <AboutSection 
           bandMembers={bandMembers}
           bandPhotoUrl="/BANDFRONT.jpg"
@@ -195,12 +192,28 @@ export default function FacelessEPK() {
           albumInfo={albumInfo}
         />
         <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="flex-1">
-              <CreditsSection credits={credits} />
-            </div>
-            <div className="flex-1">
-              <ReleaseDetailsSection releaseDetails={releaseDetails} />
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex flex-col lg:flex-row gap-8">
+              <div className="flex-1">
+                <div className="card-epk p-8">
+                  <h3 className="text-3xl font-bold mb-8 text-epk-cyan">
+                    Additional Information
+                  </h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    This section could contain additional band information, tour dates, 
+                    or other content while the song metadata is displayed in the sidebar.
+                  </p>
+                </div>
+              </div>
+              <div className="lg:w-96">
+                <SongMetaDataSection 
+                  embedUrl={embedUrl}
+                  credits={credits}
+                  releaseDetails={releaseDetails}
+                  compact={true}
+                  maxHeight="calc(100vh - 200px)"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -208,17 +221,24 @@ export default function FacelessEPK() {
 
       {/* Mobile Layout */}
       <MobileLayout showHero={showHero} albumArtUrl={albumArtUrl}>
-        <ListenSection embedUrl={embedUrl} className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm" />
         <AboutSection 
           bandMembers={bandMembers}
           bandPhotoUrl="/BANDFRONT.jpg"
           description={bandDescription}
           albumInfo={albumInfo}
-          className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm"
+          className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm"
           isMobile={true}
         />
-        <CreditsSection credits={credits} className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm" />
-        <ReleaseDetailsSection releaseDetails={releaseDetails} className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm" />
+        <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
+          <div className="container mx-auto px-4 max-w-2xl">
+            <SongMetaDataSection 
+              embedUrl={embedUrl}
+              credits={credits}
+              releaseDetails={releaseDetails}
+              className="w-full"
+            />
+          </div>
+        </div>
       </MobileLayout>
 
       {/* Contact Section - Shared between layouts */}
