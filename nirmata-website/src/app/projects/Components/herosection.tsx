@@ -2,12 +2,41 @@
 
 import Image from "next/image";
 
+// Predefined color themes for consistency
+const colorThemes = {
+  purple: 'bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent',
+  fire: 'bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent',
+  ocean: 'bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent',
+  emerald: 'bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent',
+  sunset: 'bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent',
+  neon: 'bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent',
+  royal: 'bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent',
+  cosmic: 'bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent'
+} as const;
+
 interface HeroSectionProps {
   showHero: boolean;
   onDismiss: () => void;
+  albumArtUrl: string;
+  backgroundImageUrl?: string; // Optional, defaults to albumArtUrl if not provided
+  albumTitle: string;
+  albumDescription: string;
+  colorTheme?: keyof typeof colorThemes; // Predefined themes
+  customTitleClass?: string; // Custom Tailwind classes for advanced use
 }
 
-export function HeroSection({ showHero, onDismiss }: HeroSectionProps) {
+export function HeroSection({ 
+  showHero, 
+  onDismiss, 
+  albumArtUrl, 
+  backgroundImageUrl, 
+  albumTitle, 
+  albumDescription,
+  colorTheme,
+  customTitleClass
+}: HeroSectionProps) {
+  // Determine the title class to use
+  const titleClass = customTitleClass || (colorTheme && colorThemes[colorTheme]) || 'text-gradient-epk';
   return (
     <div
       className={`fixed inset-0 z-40 min-h-screen flex items-center justify-center overflow-hidden transition-all duration-1000 bg-black cursor-pointer ${
@@ -17,8 +46,8 @@ export function HeroSection({ showHero, onDismiss }: HeroSectionProps) {
     >
       <div className="absolute inset-0">
         <Image
-          src="/FACELESS FINAL.png"
-          alt="Faceless Album Art"
+          src={backgroundImageUrl || albumArtUrl}
+          alt={`${albumTitle} Album Art`}
           fill
           className="object-cover opacity-50 blur-sm"
           priority
@@ -49,18 +78,18 @@ export function HeroSection({ showHero, onDismiss }: HeroSectionProps) {
         
         <div className="w-full max-w-md mb-8 mt-8 animate-scaleIn relative h-96">
           <Image
-            src="/FACELESS FINAL.png"
-            alt="Faceless Album Art"
+            src={albumArtUrl}
+            alt={`${albumTitle} Album Art`}
             fill
             className="object-cover rounded-lg shadow-2xl shadow-epk-cyan/20 hover:shadow-epk-cyan/30 transition-all duration-300"
           />
         </div>
 
-        <h2 className="text-3xl md:text-5xl mb-8 text-gradient-epk tracking-widest animate-slideUp">
-          FACELESS
+        <h2 className={`text-3xl md:text-5xl mb-8 ${titleClass} tracking-widest animate-slideUp`}>
+          {albumTitle.toUpperCase()}
         </h2>
         <p className="text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto text-center animate-fadeIn animation-delay-500 sm:px-4">
-          A powerful exploration of unhealthy relationships and their impact on mental health.
+          {albumDescription}
         </p>
         <p className="text-sm text-gray-500 animate-pulse animate-fadeIn animation-delay-1000 sm:text-xs">
           Click anywhere or scroll to continue...

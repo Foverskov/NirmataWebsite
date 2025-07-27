@@ -23,6 +23,8 @@ export default function FacelessEPK() {
 
   // Data configuration - Easy to modify!
   const albumArtUrl = "/FACELESS FINAL.png";
+  const albumTitle = "Faceless II";
+  const albumDescription = "The continuation of the Faceless saga - exploring deeper themes of identity and self-discovery.";
   const embedUrl = "https://samply.app/embed/c4snNvbiocLyAWXB9HCH";
   
   const bandMembers = [
@@ -174,7 +176,14 @@ export default function FacelessEPK() {
   return (
     <div className="bg-black text-white">
       {/* Hero Section */}
-      <HeroSection showHero={showHero} onDismiss={() => setShowHero(false)} />
+      <HeroSection 
+        showHero={showHero} 
+        onDismiss={() => setShowHero(false)}
+        albumArtUrl={albumArtUrl}
+        albumTitle={albumTitle}
+        albumDescription={albumDescription}
+        colorTheme="purple"
+      />
 
       {/* Desktop Layout */}
       <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
