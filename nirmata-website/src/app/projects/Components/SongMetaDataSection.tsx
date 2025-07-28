@@ -3,6 +3,9 @@
 import { Music, Users2, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
+// Debug: Test icon rendering
+console.log('Icons imported:', { Music, Users2, ChevronDown, ChevronUp });
+
 interface CreditItem {
   title: string;
   content: string | string[];
@@ -20,6 +23,7 @@ interface SongMetaDataSectionProps {
   className?: string;
   compact?: boolean;
   maxHeight?: string;
+  theme?: 'default' | 'fire';
 }
 
 export function SongMetaDataSection({ 
@@ -28,32 +32,37 @@ export function SongMetaDataSection({
   releaseDetails, 
   className = "",
   compact = false,
-  maxHeight = "none"
+  maxHeight = "none",
+  theme = "default"
 }: SongMetaDataSectionProps) {
-  const [creditsExpanded, setCreditsExpanded] = useState(true);
-  const [releaseDetailsExpanded, setReleaseDetailsExpanded] = useState(true);
+  const [creditsExpanded, setCreditsExpanded] = useState(false);
+  const [releaseDetailsExpanded, setReleaseDetailsExpanded] = useState(false);
   const [playerLoaded, setPlayerLoaded] = useState(false);
 
   const spacingClass = compact ? "space-y-4" : "space-y-6";
   const sectionPadding = compact ? "p-3" : "p-4";
+  const cardClass = theme === 'fire' ? 'card-epk-fire' : 'card-epk';
+  const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
+  const hoverColor = theme === 'fire' ? 'hover:text-red-400' : 'hover:text-epk-gold';
+  const spinnerColor = theme === 'fire' ? 'border-red-400' : 'border-epk-cyan';
 
   return (
     <div 
       className={`w-full ${className}`}
       style={{ maxHeight: maxHeight !== "none" ? maxHeight : undefined }}
     >
-      <div className="card-epk p-6">
+      <div className={cardClass + " p-6"}>
         {/* Samply Player Section */}
         <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-4 text-epk-cyan flex items-center gap-3">
-            <Music className="w-6 h-6" />
+          <h3 className={`text-2xl font-bold mb-4 ${accentColor} flex items-center gap-3`}>
+            {/* <Music className="w-6 h-6 text-current opacity-100" /> */}
             Listen Now
           </h3>
           <div className="relative">
             {!playerLoaded && (
               <div className="absolute inset-0 bg-black/30 rounded-2xl flex items-center justify-center">
                 <div className="flex items-center gap-2 text-gray-400">
-                  <div className="w-4 h-4 border-2 border-epk-cyan border-t-transparent rounded-full animate-spin"></div>
+                  <div className={`w-4 h-4 border-2 ${spinnerColor} border-t-transparent rounded-full animate-spin`}></div>
                   Loading player...
                 </div>
               </div>
@@ -76,16 +85,16 @@ export function SongMetaDataSection({
         <div className="mb-8">
           <button
             onClick={() => setCreditsExpanded(!creditsExpanded)}
-            className="w-full flex items-center justify-between text-2xl font-bold mb-4 text-epk-cyan hover:text-epk-gold transition-colors duration-300 group"
+            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
           >
             <div className="flex items-center gap-3">
-              <Users2 className="w-6 h-6" />
+              {/* <Users2 className="w-6 h-6 text-current opacity-100" /> */}
               Credits
             </div>
             {creditsExpanded ? (
-              <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 text-current opacity-100" />
             ) : (
-              <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 text-current opacity-100" />
             )}
           </button>
           
@@ -100,7 +109,7 @@ export function SongMetaDataSection({
                   key={index} 
                   className={`${sectionPadding} rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300 transform hover:scale-[1.02]`}
                 >
-                  <h4 className="text-lg font-semibold mb-2 text-epk-cyan">
+                  <h4 className={`text-lg font-semibold mb-2 ${accentColor}`}>
                     {credit.title}
                   </h4>
                   {Array.isArray(credit.content) ? (
@@ -123,16 +132,16 @@ export function SongMetaDataSection({
         <div>
           <button
             onClick={() => setReleaseDetailsExpanded(!releaseDetailsExpanded)}
-            className="w-full flex items-center justify-between text-2xl font-bold mb-4 text-epk-cyan hover:text-epk-gold transition-colors duration-300 group"
+            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
           >
             <div className="flex items-center gap-3">
-              <Music className="w-6 h-6" />
+              {/* <Music className="w-6 h-6 text-current opacity-100" /> */}
               Release Details
             </div>
             {releaseDetailsExpanded ? (
-              <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 text-current opacity-100" />
             ) : (
-              <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 text-current opacity-100" />
             )}
           </button>
           
@@ -147,7 +156,7 @@ export function SongMetaDataSection({
                   key={index} 
                   className={`${sectionPadding} rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300 transform hover:scale-[1.02]`}
                 >
-                  <h4 className="text-lg font-semibold mb-2 text-epk-cyan">
+                  <h4 className={`text-lg font-semibold mb-2 ${accentColor}`}>
                     {detail.title}
                   </h4>
                   {detail.items.map((item, itemIndex) => (
@@ -161,18 +170,18 @@ export function SongMetaDataSection({
           </div>
         </div>
 
-        {/* Optional: Quick Stats Summary */}
+        {/* Optional: Quick Stats Summary*/}
         {compact && (
           <div className="mt-6 pt-4 border-t border-epk-cyan/20">
-            <div className="flex justify-between text-xs text-gray-400">
+            {/* <div className="flex justify-between text-xs text-gray-400">
               <span>{credits.length} Credit{credits.length !== 1 ? 's' : ''}</span>
               <span>{releaseDetails.length} Detail{releaseDetails.length !== 1 ? 's' : ''}</span>
               <span className={`${playerLoaded ? 'text-green-400' : 'text-yellow-400'}`}>
                 {playerLoaded ? 'Player Ready' : 'Loading...'}
               </span>
-            </div>
+            </div> */}
           </div>
-        )}
+        )} 
       </div>
     </div>
   );

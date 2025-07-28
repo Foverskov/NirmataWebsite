@@ -23,6 +23,8 @@ export default function FacelessEPK() {
 
   // Data configuration - Easy to modify!
   const albumArtUrl = "/FACELESS FINAL.png";
+  const albumTitle = "Faceless";
+  const albumDescription = "A journey through identity and self-discovery";
   const embedUrl = "https://samply.app/embed/c4snNvbiocLyAWXB9HCH";
   
   const bandMembers = [
@@ -85,30 +87,28 @@ export default function FacelessEPK() {
   const contactInfo = [
     {
       title: "Management & Booking",
-      icon: "🎤",
       email: "booking@nirmata.com",
       phone: "+45 12 34 56 78"
     },
     {
       title: "Press & Media",
-      icon: "📰",
       email: "press@nirmata.com",
       website: "www.nirmata.dk"
     }
   ];
 
   const streamingPlatforms = [
-    { name: "Spotify", icon: "♪", bgColor: "bg-green-500", hoverColor: "bg-green-500/20", href: "#" },
-    { name: "Apple Music", icon: "♪", bgColor: "bg-red-500", hoverColor: "bg-red-500/20", href: "#" },
-    { name: "SoundCloud", icon: "♪", bgColor: "bg-orange-500", hoverColor: "bg-orange-500/20", href: "#" },
-    { name: "Bandcamp", icon: "♪", bgColor: "bg-purple-500", hoverColor: "bg-purple-500/20", href: "#" }
+    { name: "Spotify", href: "#" },
+    { name: "Apple Music", href: "#" },
+    { name: "SoundCloud", href: "#" },
+    { name: "Bandcamp", href: "#" }
   ];
 
   const socialMedia = [
-    { name: "Facebook", icon: "f", bgColor: "bg-blue-600", hoverColor: "bg-blue-500/20", href: "#" },
-    { name: "Instagram", icon: "📷", bgColor: "bg-gradient-to-r from-pink-500 to-purple-500", hoverColor: "bg-pink-500/20", href: "#" },
-    { name: "Twitter/X", icon: "X", bgColor: "bg-sky-500", hoverColor: "bg-sky-500/20", href: "#" },
-    { name: "YouTube", icon: "▶", bgColor: "bg-red-600", hoverColor: "bg-red-600/20", href: "#" }
+    { name: "Facebook", href: "#" },
+    { name: "Instagram", href: "#" },
+    { name: "Twitter/X", href: "#" },
+    { name: "YouTube", href: "#" }
   ];
 
   // Effects
@@ -167,7 +167,13 @@ export default function FacelessEPK() {
   return (
     <div className="bg-black text-white">
       {/* Hero Section */}
-      <HeroSection showHero={showHero} onDismiss={() => setShowHero(false)} />
+      <HeroSection 
+        showHero={showHero} 
+        onDismiss={() => setShowHero(false)}
+        albumArtUrl={albumArtUrl}
+        albumTitle={albumTitle}
+        albumDescription={albumDescription}
+      />
 
       {/* Desktop Layout */}
       <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>

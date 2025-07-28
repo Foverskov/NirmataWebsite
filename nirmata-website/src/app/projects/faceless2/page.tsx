@@ -86,36 +86,29 @@ export default function FacelessEPK() {
   const contactInfo = [
     {
       title: "Last Mile Records - Jimmy Nielsen",
-      icon: "🏢",
       email: "jimmy@lastmile.dk",
       phone: "+45 41 14 11 60",
       website: "lastmile.dk"
     },
     {
-      title: "Booking - Mathias",
-      icon: "📰",
-      email: "mathias@lastmile.dk",
-    },
-    {
       title: "NIRMATA",
-      icon: "🎤",
       email: "nirmata@evergreenstudios.dk",
       website: "nirmata.dk"
     }
   ];
 
   const streamingPlatforms = [
-    { name: "Spotify", icon: "♪", bgColor: "bg-green-500", hoverColor: "bg-green-500/20", href: "https://open.spotify.com/track/4JZo9vV66bCWOtTMbQ5Lxl?si=9f521319e8574632" },
-    { name: "Apple Music", icon: "♪", bgColor: "bg-red-500", hoverColor: "bg-red-500/20", href: "#" },
-    { name: "SoundCloud", icon: "♪", bgColor: "bg-orange-500", hoverColor: "bg-orange-500/20", href: "#" },
-    { name: "Bandcamp", icon: "♪", bgColor: "bg-purple-500", hoverColor: "bg-purple-500/20", href: "#" }
+    { name: "Spotify", href: "https://open.spotify.com/track/4JZo9vV66bCWOtTMbQ5Lxl?si=9f521319e8574632" },
+    { name: "Apple Music", href: "#" },
+    { name: "SoundCloud", href: "#" },
+    { name: "Bandcamp", href: "#" }
   ];
 
   const socialMedia = [
-    { name: "Facebook", icon: "f", bgColor: "bg-blue-600", hoverColor: "bg-blue-500/20", href: "#" },
-    { name: "Instagram", icon: "📷", bgColor: "bg-gradient-to-r from-pink-500 to-purple-500", hoverColor: "bg-pink-500/20", href: "#" },
-    { name: "Twitter/X", icon: "X", bgColor: "bg-sky-500", hoverColor: "bg-sky-500/20", href: "#" },
-    { name: "YouTube", icon: "▶", bgColor: "bg-red-600", hoverColor: "bg-red-600/20", href: "#" }
+    { name: "Facebook", href: "#" },
+    { name: "Instagram", href: "#" },
+    { name: "Twitter/X", href: "#" },
+    { name: "YouTube", href: "#" }
   ];
 
   // Effects
