@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, Palette, Camera } from "lucide-react";
+import { ChevronDown, ChevronUp, Palette, Camera, Download } from "lucide-react";
 
 interface ColorPalette {
   name: string;
@@ -38,23 +38,41 @@ export function DesignSection({
   const accentColor = 'text-white'//theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
   const hoverColor = theme === 'fire' ? 'hover:text-red-400' : 'hover:text-epk-gold';
 
+  // Download function
+  const downloadImage = async (src: string, filename: string) => {
+    try {
+      const response = await fetch(src);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+    }
+  };
+
   // Default fire theme color palette if none provided
   const defaultFirePalette: ColorPalette[] = [
-    { name: "Fire Red", hex: "#DC2626", description: "Primary brand color" },
-    { name: "Deep Red", hex: "#991B1B", description: "Secondary accent" },
-    { name: "Fire Orange", hex: "#FF4500", description: "Highlight color" },
-    { name: "Fire Yellow", hex: "#FBBF24", description: "Warm accent" },
-    { name: "Black", hex: "#000000", description: "Background" },
-    { name: "Dark Gray", hex: "#1A1A1A", description: "Secondary background" }
+    { name: "Pale Warm Beige", hex: "#fee4aa", description: "Secondary background" },
+    { name: "Golden Yellow", hex: "#f1c76c", description: "Warm accent" },
+    { name: "Orange Amber", hex: "#f68e3d", description: "Secondary accent" },
+    { name: "Burnt Orange", hex: "#d6491e", description: "Highlight color" },
+    { name: "Deep Red Brown", hex: "#8b2d1a", description: "Primary brand color" },
+    { name: "near-Black", hex: "#1d1b1a", description: "Background" }
   ];
 
   const colors = colorPalette || (theme === 'fire' ? defaultFirePalette : []);
 
   return (
     <div 
-      className={`min-h-screen flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 ${className}`}
+      className={`min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 mt-12 ${className}`}
     >
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-6xl mx-auto">
         <div className={`${cardClass} p-8`}>
           <h2 className={`text-3xl font-bold mb-8 ${accentColor}`}>
             Design Assets
@@ -80,7 +98,7 @@ export function DesignSection({
             
             <div 
               className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                colorPaletteExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                colorPaletteExpanded ? "max-h-fit opacity-100" : "max-h-0 opacity-0"
               }`}
             >
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 p-4 rounded-xl bg-black/30">
@@ -133,7 +151,7 @@ export function DesignSection({
             
             <div 
               className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                designAssetsExpanded ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                designAssetsExpanded ? "max-h-[1200px] opacity-100" : "max-h-0 opacity-0"
               }`}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 rounded-xl bg-black/30">
@@ -149,6 +167,17 @@ export function DesignSection({
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
+                      
+                      {/* Download button overlay */}
+                      <div className="absolute top-2 right-2">
+                        <button
+                          onClick={() => downloadImage(asset.src, `${asset.title.replace(/\s+/g, '_')}.jpg`)}
+                          className="bg-black/70 hover:bg-black/90 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+                          title="Download image"
+                        >
+                          <Download className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                     <div className="p-4">
                       <h4 className={`font-semibold mb-2 ${accentColor}`}>

@@ -63,7 +63,7 @@ export function Modal({
       {/* Modal Content */}
       <div 
         className={`
-          relative w-full max-w-2xl max-h-[90vh] overflow-hidden
+          relative w-full max-w-6xl max-h-[90vh] overflow-hidden
           animate-modal-in
           ${className}
         `}

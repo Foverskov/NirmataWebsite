@@ -33,9 +33,9 @@ export function AboutSection({
   return (
     <div
       id="about"
-      className={`min-h-screen flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 ${className}`}
+      className={`min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 ${className}`}
     >
-      <div className="w-full max-w-6xl">
+      <div className="w-full max-w-6xl mx-auto">
         <div className={cardClass + " p-8"}>
           {/* Header - Left aligned on desktop, centered on mobile */}
           <h3 className={`text-3xl font-bold mb-8 text-white lg:text-left`}>
@@ -43,7 +43,7 @@ export function AboutSection({
           </h3>
 
           {/* Content Container - Mobile: stacked, Desktop: side-by-side */}
-          <div className="flex flex-col lg:flex-row lg:gap-12 lg:items-start">
+          <div className="flex flex-col lg:flex-row lg:gap-15 lg:items-start">
             {/* Band Photo */}
             <div className="mb-8 lg:mb-0 relative h-96 lg:h-[500px] lg:w-1/2 lg:flex-shrink-0">
               <Image
@@ -55,7 +55,7 @@ export function AboutSection({
             </div>
 
             {/* Text Content */}
-            <div className="space-y-6 lg:w-1/2 lg:flex-shrink-0">
+            <div className="space-y-10 lg:w-5/12 lg:flex-shrink-0">
               {description.map((paragraph, index) => {
                 // Check if paragraph contains HTML tags
                 if (paragraph.includes('<')) {
@@ -64,7 +64,7 @@ export function AboutSection({
                   );
                 } else {
                   return (
-                    <p key={index} className="text-gray-100 leading-relaxed">
+                    <p key={index} className="text-gray-100 leading-relaxed ">
                       {paragraph}
                     </p>
                   );

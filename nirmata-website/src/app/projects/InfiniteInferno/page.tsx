@@ -22,21 +22,25 @@ export default function InfernoEPK(){
     
     // Data configuration - Easy to modify!
     const albumArtUrl = "/INFERNO_COVER_NOW.png";
-    const albumTitle = "Infinite Inferno";
-    const albumDescription = "A relentless journey through electronic soundscapes that push the boundaries of sonic intensity.";
+    const albumTitle = "Inferno";
+
+    // TODO: Rename at some point
+    const albumDescription = '<span class="italic">A new single from Copenhagen based metal band</span>';
+
     const embedUrl = "https://samply.app/embed/lIRZrw2XhEzllfKdWOhW";
     const bandDescription = [
-    "NIRMATA - Big, Melodic, Modern Rock from Copenhagen",
-    "Formed in 2023, NIRMATA delivers a unique blend of raw emotion and heavy grooves. Combining the intensity of modern heavy rock with the nostalgic, riff-heavy vibe. The music is inspired by film, history, religion & artists like Karnivool, Mastodon, Black Peaks, and Dizzy Mizz Lizzy.",
-    '<span class="font-light tracking-widest italic text-blue-400">It\'s powerful, melancholic and honest.</span>', 
-    "In 2024, the band self-released 3 singles: Empire, Bloom, and Circles - touching on themes of religion, exclusion, and growth."
+    '<span class="font-bold">NIRMATA</span> is a new modern rock project based in Copenhagen, Denmark blending powerful vocals with captivating, melodic riffs and thunderous drums.',
+    "With a dynamic sound that blends  dynamic, melodic moments alongside anthemic choruses, listeners can expect to hear echoes of VOLA, Dizzy Mizz Lizzy, Karnivool, Mastodon, and Black Peaks.",
+    'In 2024, the band released 3 singles: <span class="italic font-bold">Empire, Bloom, and Circles</span> - touching on themes of religion, exclusion, and growth. This was followed by 3 singles from their upcoming debut album: <span class="italic font-bold">Dancing On The Sun, Ministry of Pain, and Faceless</span>',
+    '<span class="font-extrabold italic text-white">NIRMATA will release their debut album <span class="italic">AVERNO</span> on August 8, 2025.</span>'
   ];
+
 
     // Credits data for Infinite Inferno
     const credits = [
       {
-        title: "Authors",
-        content: "Victor Isager Høvring, Andreas Foverskov"
+        title: "Lyrics",
+        content: ["Victor Isager Høvring", "Ross James McPherson"]
       },
       {
         title: "Composers",
@@ -50,9 +54,9 @@ export default function InfernoEPK(){
       {
         title: "Production",
         content: [
-          "Producer: NIRMATA",
+          "Producer: Oliver Tue Lundquist Møller",
           "Mix & Master: Oliver Tue Lundquist Møller",
-          "Cover Artwork: NIRMATA Creative"
+          "Cover Artwork: Ross James McPherson",
         ]
       }
     ];
@@ -63,7 +67,7 @@ export default function InfernoEPK(){
         title: "Timeline",
         items: [
           "Written & Recorded: 2024-2025",
-          "Release Date: TBA 2025"
+          "Release Date: 08.08.2025"
         ]
       },
       {
@@ -71,15 +75,14 @@ export default function InfernoEPK(){
         items: [
           "Label: LAST MILE RECORDS",
           "Publisher: LAST MILE SONGS",
-          "ISRC: TBA"
+          "ISRC: DK-B2I-24-00407"
         ]
       },
       {
         title: "Technical",
         items: [
-          "Genre: Electronic Metal",
-          "Duration: TBA",
-          "Format: Digital Release"
+          "Genre: Progressive metal/Hard Rock",
+          "Duration: 4:28",
         ]
       }
     ];
@@ -87,17 +90,41 @@ export default function InfernoEPK(){
     // Design assets for Infinite Inferno
     const designAssets = [
       {
-        src: albumArtUrl,
-        alt: `${albumTitle} Album Cover`,
-        title: "Album Artwork",
-        description: "High-resolution album cover for press and promotional use"
-      },
-      {
         src: "/BANDFRONT.jpg",
         alt: "NIRMATA Band Photo",
-        title: "Band Photo",
-        description: "Official band photograph for media and press kits"
-      }
+        title: "Band Photo Primary",
+        // description: "Official band photograph for media and press kits"
+      },
+      {
+        src: albumArtUrl,
+        alt: `${albumTitle} Album Cover`,
+        title: "Inferno Single Artwork",
+        // description: "High-resolution album cover for press and promotional use"
+      },
+      {
+        src: "/Averno_Cover_Final.png",
+        alt: "Averno Album Cover",
+        title: "AVERNO Album Cover",
+        description: ""
+      },
+      {
+        src: "/FarawayBW.jpg",
+        alt: "NIRMATA Band Photo",
+        title: "Band Photo Alternative 1",
+        description: ""
+      },
+      {
+        src: "/fullbandcolor.jpg",
+        alt: "NIRMATA Band Photo",
+        title: "Band Photo Alternative 2",
+        description: ""
+      },
+      {
+        src: "/fullbandTallboi.jpg",
+        alt: "NIRMATA Band Photo",
+        title: "Band Photo Alternative 3",
+        description: ""
+      },
     ];
 
   // Effects
@@ -176,13 +203,13 @@ export default function InfernoEPK(){
 
         {/* Desktop Layout */}
         <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
-          <div className="bg-gradient-to-b from-black/20 to-transparent py-60 backdrop-blur-sm">
+          <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1">
                   <div className="card-epk-fire p-8">
                     <h3 className="text-3xl font-bold mb-6 text-white">
-                      About Infinite Inferno
+                      About Inferno
                     </h3>
                     <div className="flex flex-col md:flex-row gap-6 mb-8">
                       <div className="flex-shrink-0">
@@ -196,15 +223,11 @@ export default function InfernoEPK(){
                         />
                       </div>
                       <div className="flex-1">
-                        <p className="text-gray-300 leading-relaxed mb-6">
-                          {albumDescription}
-                        </p>
-                        <p className="text-gray-300 leading-relaxed">
-                          This electronic metal journey represents NIRMATA&apos;s exploration into 
-                          darker, more intense sonic territories. Combining crushing riffs with 
-                          electronic elements, Infinite Inferno pushes the boundaries of what 
-                          modern metal can be.
-                        </p>
+                        <p className="text-gray-300 leading-relaxed mb-4">
+                          <span className="font-bold">A raw, unrelenting burst of industrial chaos, <span className="italic font-bold">Inferno</span> explores the evil within all of us.</span> </p>
+                          <p className="text-gray-300 leading-relaxed mb-4">With distorted, pounding rhythms, and haunting vocal fragments, <span className="font-bold">NIRMATA</span> crafts a cinematic soundscape that feels both intimate and alive.</p> 
+                          <p className="text-gray-300 leading-relaxed mb-2">For fans of dynamic, genre-blending acts like VOLA and Sleep Token, <span className="italic font-bold">Inferno</span> fuses crushing intensity with atmospheric depth.</p>
+                        
                       </div>
                     </div>
                   </div>
@@ -226,8 +249,8 @@ export default function InfernoEPK(){
 
         {/* Mobile Layout */}
         <MobileLayout showHero={showHero} albumArtUrl={albumArtUrl}>
-          <div className="bg-gradient-to-b from-transparent to-black/20 py-20 backdrop-blur-sm">
-            <div className="container mx-auto px-4 max-w-2xl">
+          <div className="bg-gradient-to-b from-transparent to-black/20 py-12 backdrop-blur-sm">
+            <div className="container mx-auto px-4 max-w-6xl">
               <div className="card-epk-fire p-8 mb-8">
                 <div className="flex flex-col items-center text-center mb-6">
                   <h3 className="text-3xl font-bold mb-6 text-white">
@@ -242,18 +265,18 @@ export default function InfernoEPK(){
                     priority
                   />
                 </div>
-                <p className="text-gray-300 leading-relaxed mb-6">
-                  {albumDescription}
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  This electronic metal journey represents NIRMATA&apos;s exploration into 
-                  darker, more intense sonic territories.
-                </p>
+                <div className="flex-1">
+                        <p className="text-gray-300 leading-relaxed mb-4">
+                          <span className="font-bold">A raw, unrelenting burst of industrial chaos, <span className="italic font-bold">Inferno</span> explores the evil within all of us.</span> </p>
+                          <p className="text-gray-300 leading-relaxed mb-4">With distorted, pounding rhythms, and haunting vocal fragments, <span className="font-bold">NIRMATA</span> crafts a cinematic soundscape that feels both intimate and alive.</p> 
+                          <p className="text-gray-300 leading-relaxed mb-2">For fans of dynamic, genre-blending acts like VOLA and Sleep Token, <span className="italic font-bold">Inferno</span> fuses crushing intensity with atmospheric depth.</p>
+                        
+                      </div>
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
-            <div className="container mx-auto px-4 max-w-2xl">
+          <div className="bg-gradient-to-b from-black/20 to-transparent py-12 backdrop-blur-sm">
+            <div className="container mx-auto px-4 max-w-6xl">
               <SongMetaDataSection 
                 embedUrl={embedUrl}
                 credits={credits}
@@ -266,10 +289,11 @@ export default function InfernoEPK(){
         </MobileLayout>
 
         {/* About Section */}
+        {/* TODO: Make this section visible from the first view. */}
         <AboutSection 
           bandPhotoUrl="/BANDFRONT.jpg"
           description={bandDescription}
-          albumInfo="Infinite Inferno represents a new chapter in NIRMATA's sonic evolution."
+          albumInfo=""
           bandMembers={[]}
           theme="fire"
         />

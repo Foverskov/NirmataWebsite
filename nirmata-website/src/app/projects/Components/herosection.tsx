@@ -56,22 +56,22 @@ export function HeroSection({
       </div>
 
       <div className="relative z-10 container mx-auto px-4 flex flex-col items-center animate-fadeIn">
-        <div className="mb-6 animate-slideDown text-center">
+        <div className="mb-8 animate-slideDown text-center">
           <Image
             src="/Nirmata_Logo.svg"
             alt="NIRMATA Logo"
-            width={300}
-            height={120}
+            width={440}
+            height={190}
             className="mx-auto invert"
             priority
           />
-          <h2 className="text-lg md:text-2xl text-center text-gray-400 tracking-wide mt-2">
+          {/* <h2 className="text-lg md:text-2xl text-center text-gray-400 tracking-wide mt-2">
             X
-          </h2>
-          <h1 className="text-2xl md:text-5xl text-center text-nirmata-light tracking-widest">
+          </h2> */}
+          {/* <h1 className="text-2xl md:text-5xl text-center text-nirmata-light tracking-widest">
             Last Mile
-          </h1>
-          <h3 className="text-2xl md:text-3xl text-center tracking-wide text-nirmata-light">
+          </h1> */}
+          <h3 className="mt-12 text-2xl md:text-3xl text-center tracking-wide text-nirmata-light">
             Presents
           </h3>
         </div>
@@ -89,7 +89,7 @@ export function HeroSection({
           {albumTitle.toUpperCase()}
         </h2>
         <p className="text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto text-center animate-fadeIn animation-delay-500 sm:px-4">
-          {albumDescription}
+          <span className="italic">A new single from Copenhagen based metal band</span>
         </p>
         <p className="text-sm text-gray-500 animate-pulse animate-fadeIn animation-delay-1000 sm:text-xs">
           Click anywhere or scroll to continue...

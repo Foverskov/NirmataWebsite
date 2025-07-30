@@ -51,7 +51,7 @@ export function SongMetaDataSection({
         <div className={cardClass + " p-6"}>
           {/* Samply Player Section */}
           <div className="mb-8">
-            <h3 className={`text-2xl font-bold mb-4 text-white flex items-center gap-3`}>
+            <h3 className="text-3xl font-bold mb-6 text-white">
               Listen Now
             </h3>
             <div className="relative">
