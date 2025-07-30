@@ -31,7 +31,6 @@ export function HeroSection({
   albumArtUrl, 
   backgroundImageUrl, 
   albumTitle, 
-  albumDescription,
   colorTheme,
   customTitleClass
 }: HeroSectionProps) {
