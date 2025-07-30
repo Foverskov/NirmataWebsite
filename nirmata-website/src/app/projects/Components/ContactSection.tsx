@@ -1,7 +1,6 @@
 "use client";
 
-import { Mail, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
+import { Mail, ExternalLink } from "lucide-react";
 
 interface ContactInfo {
   title: string;
@@ -30,9 +29,6 @@ export function ContactSection({
   className = "",
   theme = "default"
 }: ContactSectionProps) {
-  const [contactExpanded, setContactExpanded] = useState(true);
-  const [connectExpanded, setConnectExpanded] = useState(true);
-
   // Combine streaming and social media for simplified "Connect" section
   const allConnections = [
     ...streamingPlatforms.map(platform => ({ ...platform, type: 'streaming' })),
@@ -40,39 +36,31 @@ export function ContactSection({
   ];
 
   const cardClass = theme === 'fire' ? 'card-epk-fire' : 'card-epk';
-  const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
-  const hoverColor = theme === 'fire' ? 'hover:text-red-400' : 'hover:text-epk-gold';
+  const accentColor = 'text-white' //theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
   const linkHoverColor = theme === 'fire' ? 'hover:bg-red-500/20 hover:text-red-400' : 'hover:bg-epk-cyan/20 hover:text-epk-cyan';
 
   return (
     <div
       id="contact"
-      className={`w-full py-20 ${className}`}
+      className={`w-full py-20 px-4 lg:px-12 ${className}`}
     >
-      <div className="container mx-auto px-4 max-w-5xl">
-        <div className={cardClass + " p-6"}>
-          {/* Contact Information Section */}
-          <div className="mb-8">
-            <button
-              onClick={() => setContactExpanded(!contactExpanded)}
-              className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
-            >
-              <div className="flex items-center gap-3">
-                <Mail className="w-6 h-6" />
-                Contact
-              </div>
-              {contactExpanded ? (
-                <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              ) : (
-                <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              )}
-            </button>
-            
-            <div 
-              className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                contactExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-              }`}
-            >
+      <div className="w-full max-w-6xl mx-auto">
+        <div className={cardClass + " p-8"}>
+          {/* Contact Header */}
+          {/* <div className="mb-8">
+            <h2 className={`text-2xl font-bold ${accentColor} flex items-center gap-3`}>
+              <Mail className="w-6 h-6" />
+              Contact
+            </h2>
+          </div> */}
+
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column - Contact Information */}
+            <div>
+              <h3 className={`text-xl font-semibold mb-4 ${accentColor}`}>
+                Get In Touch
+              </h3>
               <div className="space-y-4">
                 {contactInfo.slice(0, 2).map((contact, index) => (
                   <div 
@@ -103,37 +91,20 @@ export function ContactSection({
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Connect Section */}
-          <div>
-            <button
-              onClick={() => setConnectExpanded(!connectExpanded)}
-              className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
-            >
-              <div className="flex items-center gap-3">
-                <ExternalLink className="w-6 h-6" />
-                Connect
-              </div>
-              {connectExpanded ? (
-                <ChevronUp className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              ) : (
-                <ChevronDown className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              )}
-            </button>
-            
-            <div 
-              className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                connectExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="p-4 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300 transform hover:scale-[1.02]">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* Right Column - Social Links */}
+            <div>
+              <h3 className={`text-xl font-semibold mb-4 ${accentColor} flex items-center gap-2`}>
+                {/* <ExternalLink className="w-5 h-5" /> */}
+                Connect With Us
+              </h3>
+              <div className="p-6 rounded-xl bg-black/30 hover:bg-black/40 transition-all duration-300">
+                <div className="grid grid-cols-2 gap-3">
                   {allConnections.map((connection, index) => (
                     <a
                       key={index}
                       href={connection.href}
-                      className={`flex items-center justify-center p-3 rounded-lg bg-black/30 ${linkHoverColor} transition-all duration-300 text-gray-300 text-sm font-medium`}
+                      className={`flex items-center justify-center p-3 rounded-lg bg-black/30 ${linkHoverColor} transition-all duration-300 text-gray-300 text-sm font-medium hover:scale-105`}
                     >
                       {connection.name}
                     </a>

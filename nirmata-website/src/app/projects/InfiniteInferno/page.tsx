@@ -12,6 +12,7 @@ import { DesktopLayout } from "../Components/desktopLayout";
 import { MobileLayout } from "../Components/mobileLayout";
 import { SongMetaDataSection } from "../Components/SongMetaDataSection";
 import { DesignSection } from "../Components/DesignSection";
+import { FloatingSocialLinks } from "../Components/FloatingSocialLinks";
 
 export default function InfernoEPK(){
     // Performance monitoring
@@ -154,6 +155,16 @@ export default function InfernoEPK(){
 
   return(
     <div className="bg-black text-white">
+        
+        {/* Floating Social Links - Place at top level for proper fixed positioning */}
+        {!showHero && (
+          <FloatingSocialLinks 
+            instagramUrl="https://instagram.com/nirmataband"
+            spotifyUrl="https://open.spotify.com/artist/YOUR_ARTIST_ID"
+            theme="fire"
+          />
+        )}
+        
         <HeroSection 
           showHero={showHero} 
           onDismiss={()=> setShowHero(false)}
@@ -167,7 +178,7 @@ export default function InfernoEPK(){
         <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
           <div className="bg-gradient-to-b from-black/20 to-transparent py-60 backdrop-blur-sm">
             <div className="container mx-auto px-4 max-w-6xl">
-              <div className="flex flex-col lg:flex-row gap-10">
+              <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1">
                   <div className="card-epk-fire p-8">
                     <h3 className="text-3xl font-bold mb-6 text-white">

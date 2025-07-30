@@ -29,7 +29,7 @@ export function AboutSection({
   theme = "default"
 }: AboutSectionProps) {
   const cardClass = theme === 'fire' ? 'card-epk-fire' : 'card-epk';
-  const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
+  // const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
   return (
     <div
       id="about"

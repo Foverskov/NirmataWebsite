@@ -35,7 +35,7 @@ export function DesignSection({
 
   // Theme styling
   const cardClass = theme === 'fire' ? 'card-epk-fire' : 'card-epk';
-  const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
+  const accentColor = 'text-white'//theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
   const hoverColor = theme === 'fire' ? 'hover:text-red-400' : 'hover:text-epk-gold';
 
   // Default fire theme color palette if none provided
