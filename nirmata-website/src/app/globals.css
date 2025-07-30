@@ -63,14 +63,14 @@ html {
 /* Fire-themed EPK cards for Infinite Inferno */
 .card-epk-fire {
   @apply bg-black/80 border-2 rounded-2xl p-8 backdrop-blur-sm transition-all duration-300 hover:bg-black/90;
-  border-image: linear-gradient(45deg, var(--fire-red), var(--fire-deep-red), var(--fire-orange), var(--fire-red)) 1;
+  border-image: linear-gradient(45deg, var(--fire-red), var(--fire-deep-red), var(--fire-orange), var(--fire-red)) 0.5;
   border-style: solid;
   box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
 }
 
 .card-epk-fire:hover {
   box-shadow: 0 0 30px rgba(220, 38, 38, 0.6), 0 0 40px rgba(153, 27, 27, 0.4);
-  border-image: linear-gradient(45deg, var(--fire-deep-red), var(--fire-red), var(--fire-orange), var(--fire-deep-red)) 1;
+  border-image: linear-gradient(45deg, var(--fire-deep-red), var(--fire-red), var(--fire-orange), var(--fire-deep-red)) 0.5;
 }
 
 /* Typography System */
@@ -92,8 +92,14 @@ html {
 
 /* Fire-themed text gradient */
 .text-gradient-fire {
-  @apply bg-gradient-to-r from-[var(--fire-red)] to-[var(--fire-deep-red)] bg-clip-text text-transparent;
+  /* background: linear-gradient(to right, white,var(--fire-orange) ,var(--fire-deep-red)); */
+  background: linear-gradient(to right, var(--fire-red), var(--fire-orange), white);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
+
 
 /* EPK-specific Animations */
 @keyframes fadeIn {
@@ -148,6 +154,6 @@ html {
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
   .card-epk {
-    @apply p-6;
+    padding: 1.5rem;
   }
 }

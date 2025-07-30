@@ -170,7 +170,7 @@ export default function InfernoEPK(){
               <div className="flex flex-col lg:flex-row gap-10">
                 <div className="flex-1">
                   <div className="card-epk-fire p-8">
-                    <h3 className="text-3xl font-bold mb-6 text-gradient-fire">
+                    <h3 className="text-3xl font-bold mb-6 text-white">
                       About Infinite Inferno
                     </h3>
                     <div className="flex flex-col md:flex-row gap-6 mb-8">
@@ -219,7 +219,7 @@ export default function InfernoEPK(){
             <div className="container mx-auto px-4 max-w-2xl">
               <div className="card-epk-fire p-8 mb-8">
                 <div className="flex flex-col items-center text-center mb-6">
-                  <h3 className="text-3xl font-bold mb-6 text-gradient-fire">
+                  <h3 className="text-3xl font-bold mb-6 text-white">
                     About Infinite Inferno
                   </h3>
                   <Image

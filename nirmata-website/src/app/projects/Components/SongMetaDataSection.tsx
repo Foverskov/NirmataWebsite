@@ -43,7 +43,7 @@ export function SongMetaDataSection({
   const sectionPadding = compact ? "p-3" : "p-4";
   const cardClass = theme === 'fire' ? 'card-epk-fire' : 'card-epk';
   const accentColor = theme === 'fire' ? 'text-gradient-fire' : 'text-epk-cyan';
-  const hoverColor = theme === 'fire' ? 'hover:text-red-400' : 'hover:text-epk-gold';
+  const hoverColor = theme === 'fire' ? 'hover:text-gradient-fire' : 'hover:text-epk-gold';
   const spinnerColor = theme === 'fire' ? 'border-red-400' : 'border-epk-cyan';
 
   return (
@@ -54,7 +54,7 @@ export function SongMetaDataSection({
       <div className={cardClass + " p-6"}>
         {/* Samply Player Section */}
         <div className="mb-8">
-          <h3 className={`text-2xl font-bold mb-4 ${accentColor} flex items-center gap-3`}>
+          <h3 className={`text-2xl font-bold mb-4 text-white flex items-center gap-3`}>
             {/* <Music className="w-6 h-6 text-current opacity-100" /> */}
             Listen Now
           </h3>
@@ -85,7 +85,7 @@ export function SongMetaDataSection({
         <div className="mb-8">
           <button
             onClick={() => setCreditsExpanded(!creditsExpanded)}
-            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
+            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 text-white ${hoverColor} transition-colors duration-300 group`}
           >
             <div className="flex items-center gap-3">
               {/* <Users2 className="w-6 h-6 text-current opacity-100" /> */}
@@ -132,7 +132,7 @@ export function SongMetaDataSection({
         <div>
           <button
             onClick={() => setReleaseDetailsExpanded(!releaseDetailsExpanded)}
-            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 ${accentColor} ${hoverColor} transition-colors duration-300 group`}
+            className={`w-full flex items-center justify-between text-2xl font-bold mb-4 text-white ${hoverColor} transition-colors duration-300 group`}
           >
             <div className="flex items-center gap-3">
               {/* <Music className="w-6 h-6 text-current opacity-100" /> */}

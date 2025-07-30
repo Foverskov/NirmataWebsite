@@ -38,7 +38,7 @@ export function AboutSection({
       <div className="w-full max-w-6xl">
         <div className={cardClass + " p-8"}>
           {/* Header - Left aligned on desktop, centered on mobile */}
-          <h3 className={`text-3xl font-bold mb-8 ${accentColor} text-center lg:text-left`}>
+          <h3 className={`text-3xl font-bold mb-8 text-white lg:text-left`}>
             About NIRMATA
           </h3>
 
@@ -50,7 +50,7 @@ export function AboutSection({
                 src={bandPhotoUrl}
                 alt="NIRMATA Band Photo"
                 fill
-                className="object-cover rounded-lg shadow-2xl shadow-epk-cyan/20"
+                className="object-cover shadow-2xl shadow-epk-cyan/20"
               />
             </div>
 
