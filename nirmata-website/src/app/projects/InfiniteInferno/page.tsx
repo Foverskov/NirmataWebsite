@@ -19,6 +19,8 @@ export default function InfernoEPK(){
     usePerformanceMonitor("InfernoEPK");
     
     const [showHero, setShowHero] = useState(true);
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [backgroundBlur, setBackgroundBlur] = useState(16); // Start with heavy blur
     
     // Data configuration - Easy to modify!
     const albumArtUrl = "/INFERNO_COVER_NOW.png";
@@ -180,14 +182,56 @@ export default function InfernoEPK(){
     return () => window.removeEventListener("scroll", handleScroll);
   }, [showHero]);
 
+  // Scroll-triggered blur transition effect
+  useEffect(() => {
+    if (showHero) return;
+
+    const handleBlurScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const desktopLayoutHeight = windowHeight * 1.2; // Approximate desktop layout height
+      
+      // Calculate scroll progress (0 to 1)
+      const progress = Math.min(scrollY / desktopLayoutHeight, 1);
+      setScrollProgress(progress);
+      
+      // Calculate blur intensity (16px to 0px)
+      // Transition happens in the last 30% of the scroll
+      const blurTransitionStart = 0.7;
+      let blurValue = 16;
+      
+      if (progress > blurTransitionStart) {
+        const transitionProgress = (progress - blurTransitionStart) / (1 - blurTransitionStart);
+        blurValue = 16 * (1 - transitionProgress);
+      }
+      
+      setBackgroundBlur(Math.max(0, blurValue));
+    };
+
+    // Throttle scroll events for performance
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleBlurScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [showHero]);
+
   return(
     <div className="bg-black text-white">
         
         {/* Floating Social Links - Place at top level for proper fixed positioning */}
         {!showHero && (
           <FloatingSocialLinks 
-            instagramUrl="https://instagram.com/nirmataband"
-            spotifyUrl="https://open.spotify.com/artist/YOUR_ARTIST_ID"
+            instagramUrl="https://instagram.com/nirmata_dk"
+            spotifyUrl="https://open.spotify.com/artist/5ylVpq0WnVo31TM7q0IkFf?si=WTxKAz_GR9KtlMiZd3nhzA"
             theme="fire"
           />
         )}
@@ -202,7 +246,7 @@ export default function InfernoEPK(){
         />
 
         {/* Desktop Layout */}
-        <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
+        <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl} backgroundBlur={backgroundBlur}>
           <div className="bg-gradient-to-b from-black/20 to-transparent py-40 backdrop-blur-sm">
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="flex flex-col lg:flex-row gap-4">
@@ -246,10 +290,54 @@ export default function InfernoEPK(){
               </div>
             </div>
           </div>
+
+          {/* About Section - Desktop with Parallax */}
+          <div 
+            className="-mt-12 transition-all duration-300 ease-out"
+            style={{ 
+              transform: `translateY(${Math.max(0, (1 - scrollProgress) * 50)}px)`,
+              opacity: Math.min(1, scrollProgress * 2)
+            }}
+          >
+            <AboutSection 
+              bandPhotoUrl="/BANDFRONT.jpg"
+              description={bandDescription}
+              albumInfo=""
+              bandMembers={[]}
+              theme="fire"
+            />
+          </div>
+
+          {/* Design Section - Desktop */}
+          <DesignSection 
+            designAssets={designAssets}
+            theme="fire"
+          />
+
+          {/* Contact Section - Desktop */}
+          <ContactSection 
+            contactInfo={[
+              {
+                title: "NIRMATA",
+                email: "nirmata@evergreenstudios.dk",
+                website: "nirmata.dk"
+              }
+            ]}
+            streamingPlatforms={[
+              { name: "Spotify", href: "#" },
+              { name: "Apple Music", href: "#" },
+              { name: "Linktree", href:"#"}
+            ]}
+            socialMedia={[
+              { name: "Instagram", href: "#" },
+              { name: "YouTube", href: "#" }
+            ]}
+            theme="fire"
+          />
         </DesktopLayout>
 
         {/* Mobile Layout */}
-        <MobileLayout showHero={showHero} albumArtUrl={albumArtUrl}>
+        <MobileLayout showHero={showHero} albumArtUrl={albumArtUrl} backgroundBlur={backgroundBlur}>
           <div className="bg-gradient-to-b from-transparent to-black/20 py-12 backdrop-blur-sm">
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="card-epk-fire p-8 mb-8">
@@ -287,46 +375,45 @@ export default function InfernoEPK(){
               />
             </div>
           </div>
-        </MobileLayout>
 
-        {/* About Section */}
-        {/* TODO: Make this section visible from the first view. */}
-        <div className="-mt-12">
-          <AboutSection 
-            bandPhotoUrl="/BANDFRONT.jpg"
-            description={bandDescription}
-            albumInfo=""
-            bandMembers={[]}
+          {/* About Section - Mobile with simpler transition */}
+          <div className="-mt-12">
+            <AboutSection 
+              bandPhotoUrl="/BANDFRONT.jpg"
+              description={bandDescription}
+              albumInfo=""
+              bandMembers={[]}
+              theme="fire"
+            />
+          </div>
+
+          {/* Design Section - Mobile */}
+          <DesignSection 
+            designAssets={designAssets}
             theme="fire"
           />
-        </div>
 
-        {/* Design Section */}
-        <DesignSection 
-          designAssets={designAssets}
-          theme="fire"
-        />
-
-        {/* Contact Section - Add if needed */}
-        <ContactSection 
-          contactInfo={[
-            {
-              title: "NIRMATA",
-              email: "nirmata@evergreenstudios.dk",
-              website: "nirmata.dk"
-            }
-          ]}
-          streamingPlatforms={[
-            { name: "Spotify", href: "#" },
-            { name: "Apple Music", href: "#" },
-            { name: "Linktree", href:"#"}
-          ]}
-          socialMedia={[
-            { name: "Instagram", href: "#" },
-            { name: "YouTube", href: "#" }
-          ]}
-          theme="fire"
-        />
+          {/* Contact Section - Mobile */}
+          <ContactSection 
+            contactInfo={[
+              {
+                title: "NIRMATA",
+                email: "nirmata@evergreenstudios.dk",
+                website: "nirmata.dk"
+              }
+            ]}
+            streamingPlatforms={[
+              { name: "Linktree", href:"https://linktr.ee/nirmata_dk" },
+              { name: "Spotify", href: "https://open.spotify.com/artist/5ylVpq0WnVo31TM7q0IkFf?si=WTxKAz_GR9KtlMiZd3nhzA" },
+              { name: "Apple Music", href: "https://music.apple.com/us/artist/nirmata/1715912090" }
+            ]}
+            socialMedia={[
+              { name: "Instagram", href: "https://instagram.com/nirmata_dk" },
+              { name: "YouTube", href: "https://www.youtube.com/@NIRMATA-music" }
+            ]}
+            theme="fire"
+          />
+        </MobileLayout>
     </div>
   )
 }

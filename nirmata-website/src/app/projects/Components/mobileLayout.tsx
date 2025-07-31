@@ -7,9 +7,10 @@ interface MobileLayoutProps {
   showHero: boolean;
   albumArtUrl: string;
   children: ReactNode;
+  backgroundBlur?: number;
 }
 
-export function MobileLayout({ showHero, albumArtUrl, children }: MobileLayoutProps) {
+export function MobileLayout({ showHero, albumArtUrl, children, backgroundBlur = 4 }: MobileLayoutProps) {
   return (
     <div className={`lg:hidden transition-opacity duration-500 relative ${showHero ? "opacity-0" : "opacity-100"}`}>
       {/* Background Image for mobile layout */}
@@ -18,7 +19,8 @@ export function MobileLayout({ showHero, albumArtUrl, children }: MobileLayoutPr
           src={albumArtUrl}
           alt="Album Art Background"
           fill
-          className="object-cover opacity-20 scale-110 blur-sm"
+          className="object-cover opacity-20 scale-110 transition-all duration-300 ease-out"
+          style={{ filter: `blur(${backgroundBlur}px)` }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
