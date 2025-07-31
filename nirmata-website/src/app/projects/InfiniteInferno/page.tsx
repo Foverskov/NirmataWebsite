@@ -203,15 +203,15 @@ export default function InfernoEPK(){
 
         {/* Desktop Layout */}
         <DesktopLayout showHero={showHero} albumArtUrl={albumArtUrl}>
-          <div className="bg-gradient-to-b from-black/20 to-transparent py-20 backdrop-blur-sm">
+          <div className="bg-gradient-to-b from-black/20 to-transparent py-40 backdrop-blur-sm">
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1">
-                  <div className="card-epk-fire p-8">
+                  <div className="card-epk-fire p-8" style={{ maxHeight: "calc(100vh - 200px)" }}>
                     <h3 className="text-3xl font-bold mb-6 text-white">
                       About Inferno
                     </h3>
-                    <div className="flex flex-col md:flex-row gap-6 mb-8">
+                    <div className="flex flex-col md:flex-row gap-6 mb-3">
                       <div className="flex-shrink-0">
                         <Image
                           src={albumArtUrl}
@@ -239,6 +239,7 @@ export default function InfernoEPK(){
                     releaseDetails={releaseDetails}
                     compact={true}
                     maxHeight="calc(100vh - 200px)"
+                    style={{ minHeight: "600px" }} // Match expected About section height
                     theme="fire"
                   />
                 </div>
@@ -290,13 +291,15 @@ export default function InfernoEPK(){
 
         {/* About Section */}
         {/* TODO: Make this section visible from the first view. */}
-        <AboutSection 
-          bandPhotoUrl="/BANDFRONT.jpg"
-          description={bandDescription}
-          albumInfo=""
-          bandMembers={[]}
-          theme="fire"
-        />
+        <div className="-mt-12">
+          <AboutSection 
+            bandPhotoUrl="/BANDFRONT.jpg"
+            description={bandDescription}
+            albumInfo=""
+            bandMembers={[]}
+            theme="fire"
+          />
+        </div>
 
         {/* Design Section */}
         <DesignSection 

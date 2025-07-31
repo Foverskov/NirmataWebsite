@@ -21,6 +21,7 @@ interface SongMetaDataSectionProps {
   className?: string;
   compact?: boolean;
   maxHeight?: string;
+  style?: React.CSSProperties;
   theme?: 'default' | 'fire';
 }
 
@@ -31,6 +32,7 @@ export function SongMetaDataSection({
   className = "",
   compact = false,
   maxHeight = "none",
+  style = {},
   theme = "default"
 }: SongMetaDataSectionProps) {
   const [creditsModalOpen, setCreditsModalOpen] = useState(false);
@@ -46,7 +48,10 @@ export function SongMetaDataSection({
     <>
       <div 
         className={`w-full ${className}`}
-        style={{ maxHeight: maxHeight !== "none" ? maxHeight : undefined }}
+        style={{ 
+          maxHeight: maxHeight !== "none" ? maxHeight : undefined,
+          ...style 
+        }}
       >
         <div className={cardClass + " p-6"}>
           {/* Samply Player Section */}

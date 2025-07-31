@@ -33,7 +33,7 @@ export function AboutSection({
   return (
     <div
       id="about"
-      className={`min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 ${className}`}
+      className={`min-h-[40vh] flex items-center justify-center bg-gradient-to-b from-black/20 to-transparent px-4 lg:px-12 ${className}`}
     >
       <div className="w-full max-w-6xl mx-auto">
         <div className={cardClass + " p-8"}>
