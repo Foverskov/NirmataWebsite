@@ -7,10 +7,10 @@ import { Music, ArrowRight, Calendar, PlayCircle } from "lucide-react";
 export default function ProjectsPage() {
   const projects = [
     {
-      id: "infiniteInferno",
-      title: "Infinite Inferno",
+      id: "Inferno",
+      title: "Inferno",
       description: "Latest release from Nirmata - A powerful journey through sound",
-      path: "/projects/InfiniteInferno",
+      path: "/projects/Inferno",
       status: "Latest Release",
       year: "2024",
       coverImage: "/INFERNO_COVER_NOW.png"

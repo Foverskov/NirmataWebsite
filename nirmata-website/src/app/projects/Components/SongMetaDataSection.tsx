@@ -1,8 +1,9 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Modal } from "./Modal";
+import AudioPlayer from "./wavPlayer";
 
 interface CreditItem {
   title: string;
@@ -25,8 +26,7 @@ interface SongMetaDataSectionProps {
   theme?: 'default' | 'fire';
 }
 
-export function SongMetaDataSection({ 
-  embedUrl, 
+const SongMetaDataSectionComponent = ({ 
   credits, 
   releaseDetails, 
   className = "",
@@ -34,7 +34,7 @@ export function SongMetaDataSection({
   maxHeight = "none",
   style = {},
   theme = "default"
-}: SongMetaDataSectionProps) {
+}: SongMetaDataSectionProps) => {
   const [creditsModalOpen, setCreditsModalOpen] = useState(false);
   const [releaseDetailsModalOpen, setReleaseDetailsModalOpen] = useState(false);
   const [playerLoaded, setPlayerLoaded] = useState(false);
@@ -53,7 +53,7 @@ export function SongMetaDataSection({
           ...style 
         }}
       >
-        <div className={cardClass + " p-6"}>
+        <div className={cardClass + " p-6 mb-10 "}>
           {/* Samply Player Section */}
           <div className="mb-8">
             <h3 className="text-3xl font-bold mb-6 text-white">
@@ -68,7 +68,24 @@ export function SongMetaDataSection({
                   </div>
                 </div>
               )}
-              <iframe
+              <AudioPlayer 
+                src="/audio/Inferno.mp3"
+                title="Inferno - NIRMATA"
+                preload="auto"
+                className="epk-audio-player"
+                enableStreaming={true}
+                bufferSize={512 * 1024} // 512KB buffer for faster initial load
+                onError={(error) => {
+                  console.error('Audio error:', error);
+                  setPlayerLoaded(true); // Hide loading spinner on error
+                }}
+                onLoadComplete={() => {
+                  console.log('Audio loaded');
+                  setPlayerLoaded(true);
+                }}
+                onLoadStart={() => setPlayerLoaded(false)}
+              />
+              {/* <iframe
                 src={embedUrl}
                 onLoad={() => setPlayerLoaded(true)}
                 style={{
@@ -78,7 +95,7 @@ export function SongMetaDataSection({
                   border: "1px solid rgba(255, 255, 255, 0.12)",
                 }}
                 className="transition-opacity duration-300"
-              />
+              /> */}
             </div>
           </div>
 
@@ -175,4 +192,6 @@ export function SongMetaDataSection({
       </Modal>
     </>
   );
-}
+};
+
+export const SongMetaDataSection = memo(SongMetaDataSectionComponent);
