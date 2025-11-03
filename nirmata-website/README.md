@@ -37,10 +37,10 @@ This project uses [UploadThing](https://uploadthing.com) for file upload functio
 
 ### File Upload Configuration
 
-The project is configured with the following upload restrictions:
-- CORS policies configured for UploadThing endpoints
+The project is configured with the following upload settings:
+- CORS policies configured for UploadThing endpoints (credentials disabled for security)
 - Image domains whitelisted: `uploadthing.com`, `utfs.io`
-- File size limits enforced (configured in application code)
+- File size limits and allowed file types will be configured in the UploadThing API route implementation
 
 **Important:** File uploads require server-side capabilities. When implementing upload functionality, you'll need to remove or disable static export mode from the Next.js configuration.
 

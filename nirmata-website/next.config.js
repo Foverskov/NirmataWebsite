@@ -83,6 +83,10 @@ const nextConfig = withBundleAnalyzer({
         source: '/api/uploadthing',
         headers: [
           {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'false',
+          },
+          {
             key: 'Access-Control-Allow-Origin',
             value: process.env.ALLOWED_UPLOAD_ORIGIN || 'http://localhost:3000',
           },
