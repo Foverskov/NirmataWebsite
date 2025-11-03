@@ -4,6 +4,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 const nextConfig = withBundleAnalyzer({
+  // Note: UploadThing requires server-side capabilities
+  // Static export mode must be disabled when implementing file uploads
+  // output: 'export', // <-- Remove this line when implementing uploads
   // Next.js config
   images: {
     remotePatterns: [
@@ -16,6 +19,19 @@ const nextConfig = withBundleAnalyzer({
       {
         protocol: 'https',
         hostname: 'localhost',
+        port: '',
+        pathname: '/**',
+      },
+      // UploadThing image domains
+      {
+        protocol: 'https',
+        hostname: 'uploadthing.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
         port: '',
         pathname: '/**',
       },
@@ -58,6 +74,28 @@ const nextConfig = withBundleAnalyzer({
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // UploadThing CORS headers
+      {
+        source: '/api/uploadthing',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,DELETE,PATCH,POST,PUT',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
           },
         ],
       },
