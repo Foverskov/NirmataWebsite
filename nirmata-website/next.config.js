@@ -78,7 +78,8 @@ const nextConfig = withBundleAnalyzer({
         ],
       },
       // UploadThing CORS headers
-      // Note: Set ALLOWED_UPLOAD_ORIGIN environment variable in production
+      // IMPORTANT: Set ALLOWED_UPLOAD_ORIGIN environment variable in production!
+      // The localhost default is for development only and should not be used in production.
       {
         source: '/api/uploadthing',
         headers: [
