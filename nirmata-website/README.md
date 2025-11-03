@@ -30,6 +30,7 @@ This project uses [UploadThing](https://uploadthing.com) for file upload functio
 | `UPLOADTHING_TOKEN` | Yes | UploadThing API token for server-side operations |
 | `UPLOADTHING_SECRET` | Yes | UploadThing API secret for authentication |
 | `NEXT_PUBLIC_UPLOADTHING_URL` | No | Public URL configuration for UploadThing (default: https://uploadthing.com) |
+| `ALLOWED_UPLOAD_ORIGIN` | No | Allowed origin for CORS (use specific domain in production, defaults to `*` for development) |
 | `CUSTOM_STORAGE_ENDPOINT` | No | Custom storage endpoint for future migration to self-hosted storage |
 
 **Note:** The `NEXT_PUBLIC_*` prefix makes the variable accessible in client-side code. Never use this prefix for secrets!

@@ -78,16 +78,14 @@ const nextConfig = withBundleAnalyzer({
         ],
       },
       // UploadThing CORS headers
+      // Note: Restrict Access-Control-Allow-Origin to specific domains in production
+      // Using wildcard (*) with credentials is a security risk
       {
         source: '/api/uploadthing',
         headers: [
           {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true',
-          },
-          {
             key: 'Access-Control-Allow-Origin',
-            value: '*',
+            value: process.env.ALLOWED_UPLOAD_ORIGIN || '*',
           },
           {
             key: 'Access-Control-Allow-Methods',
