@@ -124,4 +124,5 @@ export type UploadError =
   | { type: 'UPLOAD_FAILED'; message: string }
   | { type: 'NETWORK_ERROR'; message: string }
   | { type: 'AUTHENTICATION_REQUIRED' }
-  | { type: 'PERMISSION_DENIED' };
+  | { type: 'PERMISSION_DENIED' }
+  | { type: 'UNKNOWN_ERROR'; message: string };
