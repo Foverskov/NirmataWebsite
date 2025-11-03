@@ -30,7 +30,7 @@ This project uses [UploadThing](https://uploadthing.com) for file upload functio
 | `UPLOADTHING_TOKEN` | Yes | UploadThing API token for server-side operations |
 | `UPLOADTHING_SECRET` | Yes | UploadThing API secret for authentication |
 | `NEXT_PUBLIC_UPLOADTHING_URL` | No | Public URL configuration for UploadThing (default: https://uploadthing.com) |
-| `ALLOWED_UPLOAD_ORIGIN` | No | Allowed origin for CORS (use specific domain in production, defaults to `*` for development) |
+| `ALLOWED_UPLOAD_ORIGIN` | No | Allowed origin for CORS (defaults to `http://localhost:3000` for development, set to your production domain when deploying) |
 | `CUSTOM_STORAGE_ENDPOINT` | No | Custom storage endpoint for future migration to self-hosted storage |
 
 **Note:** The `NEXT_PUBLIC_*` prefix makes the variable accessible in client-side code. Never use this prefix for secrets!
@@ -42,7 +42,7 @@ The project is configured with the following upload restrictions:
 - Image domains whitelisted: `uploadthing.com`, `utfs.io`
 - File size limits enforced (configured in application code)
 
-**Important:** File uploads require server-side capabilities. The current `output: "export"` setting in `next.config.ts` must be removed when implementing upload functionality.
+**Important:** File uploads require server-side capabilities. When implementing upload functionality, you'll need to remove or disable static export mode from the Next.js configuration.
 
 ## Getting Started
 
