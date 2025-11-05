@@ -34,7 +34,14 @@ export interface AuditLogEntry {
 
 /**
  * In-memory audit log storage
- * For production, consider using a database or external logging service
+ * 
+ * ⚠️ PRODUCTION WARNING:
+ * This in-memory implementation will lose all logs on server restart.
+ * For production deployments:
+ * 1. Use a database (PostgreSQL, MongoDB) for persistent storage
+ * 2. Consider external logging services (CloudWatch, Elasticsearch, Datadog)
+ * 3. Implement log rotation and archival policies
+ * 4. Set up alerting for security events
  */
 class AuditLog {
   private logs: AuditLogEntry[];
@@ -267,7 +274,11 @@ class AuditLog {
    * Generate a unique ID for log entries
    */
   private generateId(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    // Fallback using timestamp and random component
+    return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   }
   
   /**

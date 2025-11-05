@@ -8,6 +8,9 @@ import type { NextRequest } from 'next/server';
 import { validateUploadToken } from './lib/auth/validateUploadToken';
 
 // Rate limiting: Track requests per IP
+// ⚠️ PRODUCTION WARNING:
+// This in-memory rate limiting will not work correctly in multi-instance deployments.
+// For production, use Redis with a library like 'ioredis' or 'rate-limiter-flexible'
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 60; // 60 requests per minute
@@ -128,11 +131,13 @@ export function middleware(request: NextRequest) {
   const token = extractToken(request);
   
   if (!token) {
-    // For page routes, redirect to an error page or show a message
+    // For page routes, show error with instructions
     if (pathname.startsWith('/upload') && !pathname.startsWith('/api/')) {
-      // Allow access to upload page without token initially
-      // Token validation will happen on the page itself
-      return NextResponse.next();
+      // Redirect to error page or allow through for client-side validation
+      // The page itself should validate the token and show appropriate UI
+      const response = NextResponse.next();
+      response.headers.set('x-token-required', 'true');
+      return response;
     }
     
     // For API routes, return 401

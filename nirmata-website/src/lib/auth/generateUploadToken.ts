@@ -52,10 +52,8 @@ function generateSecureToken(length: number = 32): string {
       token += chars[randomValues[i] % chars.length];
     }
   } else {
-    // Fallback to Math.random (less secure, for testing only)
-    for (let i = 0; i < length; i++) {
-      token += chars[Math.floor(Math.random() * chars.length)];
-    }
+    // No secure random source available
+    throw new Error('No secure random number generator available. crypto.getRandomValues is required.');
   }
   
   return token;

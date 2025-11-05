@@ -34,7 +34,15 @@ export interface UploadTokenMetadata {
 
 /**
  * In-memory token store
- * For production, consider using a database or Redis
+ * 
+ * ⚠️ PRODUCTION WARNING:
+ * This in-memory implementation will lose all tokens on server restart.
+ * For production deployments:
+ * 1. Replace with Redis for distributed caching
+ * 2. Use a database (PostgreSQL, MongoDB) for persistence
+ * 3. Implement token synchronization across multiple server instances
+ * 
+ * See README.md for migration examples
  */
 class TokenStore {
   private tokens: Map<string, UploadTokenMetadata>;
