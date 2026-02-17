@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import RevealOnScrollPercent from "@/components/RevealOnScrollPercent";
+import { concertEvents, type ConcertEvent } from "@/data/concertEvents";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -40,28 +41,6 @@ export default function Home() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
-  type ConcertEvent = {
-    title: string;
-    dateISO: string;
-    displayDate: string;
-    location: string;
-    imageSrc: string;
-    detailsUrl: string;
-    ticketUrl?: string;
-  };
-
-  const events: ConcertEvent[] = [
-    {
-      title: "Vesterbro Rock Fest",
-      dateISO: "2025-03-15",
-      displayDate: "March 15, 2025",
-      location: "Studenterhuset, Copenhagen",
-      imageSrc: "/VBRF2.png",
-      detailsUrl: "https://www.facebook.com/events/1345915849727062/",
-      ticketUrl: "https://www.facebook.com/events/1345915849727062/",
-    },
-  ];
 
   const parseEventDate = (dateISO: string) => {
     const [year, month, day] = dateISO.split("-").map(Number);
@@ -124,7 +103,7 @@ export default function Home() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const sortedEvents = [...events].sort(
+  const sortedEvents = [...concertEvents].sort(
     (a, b) => parseEventDate(a.dateISO).getTime() - parseEventDate(b.dateISO).getTime(),
   );
   const upcomingEvents = sortedEvents.filter(
@@ -136,7 +115,7 @@ export default function Home() {
 
   const eventsStructuredData = {
     "@context": "https://schema.org",
-    "@graph": events.map((event) => {
+    "@graph": concertEvents.map((event) => {
       const isPastShow = parseEventDate(event.dateISO).getTime() < today.getTime();
 
       return {
