@@ -41,6 +41,133 @@ export default function Home() {
     setIsMenuOpen(false);
   };
 
+  type ConcertEvent = {
+    title: string;
+    dateISO: string;
+    displayDate: string;
+    location: string;
+    imageSrc: string;
+    detailsUrl: string;
+    ticketUrl?: string;
+  };
+
+  const events: ConcertEvent[] = [
+    {
+      title: "Vesterbro Rock Fest",
+      dateISO: "2025-03-15",
+      displayDate: "March 15, 2025",
+      location: "Studenterhuset, Copenhagen",
+      imageSrc: "/VBRF2.png",
+      detailsUrl: "https://www.facebook.com/events/1345915849727062/",
+      ticketUrl: "https://www.facebook.com/events/1345915849727062/",
+    },
+  ];
+
+  const parseEventDate = (dateISO: string) => {
+    const [year, month, day] = dateISO.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+  const toISODateLocal = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+      date.getDate(),
+    ).padStart(2, "0")}`;
+  const toGoogleDate = (dateISO: string) => dateISO.replace(/-/g, "");
+  const getNextDateISO = (dateISO: string) => {
+    const date = parseEventDate(dateISO);
+    date.setDate(date.getDate() + 1);
+    return toISODateLocal(date);
+  };
+  const escapeICS = (value: string) =>
+    value
+      .replace(/\\/g, "\\\\")
+      .replace(/\n/g, "\\n")
+      .replace(/,/g, "\\,")
+      .replace(/;/g, "\\;");
+  const slugify = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  const getGoogleCalendarUrl = (event: ConcertEvent) => {
+    const details = `Event details: ${event.detailsUrl}`;
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: event.title,
+      dates: `${toGoogleDate(event.dateISO)}/${toGoogleDate(getNextDateISO(event.dateISO))}`,
+      details,
+      location: event.location,
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  };
+  const getICSFileUrl = (event: ConcertEvent) => {
+    const icsBody = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//NIRMATA//Concert Calendar//EN",
+      "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      `UID:${slugify(event.title)}-${event.dateISO}@nirmata`,
+      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")}`,
+      `DTSTART;VALUE=DATE:${toGoogleDate(event.dateISO)}`,
+      `DTEND;VALUE=DATE:${toGoogleDate(getNextDateISO(event.dateISO))}`,
+      `SUMMARY:${escapeICS(event.title)}`,
+      `LOCATION:${escapeICS(event.location)}`,
+      `DESCRIPTION:${escapeICS(`Event details: ${event.detailsUrl}`)}`,
+      `URL:${event.detailsUrl}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+
+    return `data:text/calendar;charset=utf-8,${encodeURIComponent(icsBody)}`;
+  };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sortedEvents = [...events].sort(
+    (a, b) => parseEventDate(a.dateISO).getTime() - parseEventDate(b.dateISO).getTime(),
+  );
+  const upcomingEvents = sortedEvents.filter(
+    (event) => parseEventDate(event.dateISO).getTime() >= today.getTime(),
+  );
+  const pastEvents = sortedEvents
+    .filter((event) => parseEventDate(event.dateISO).getTime() < today.getTime())
+    .reverse();
+
+  const eventsStructuredData = {
+    "@context": "https://schema.org",
+    "@graph": events.map((event) => {
+      const isPastShow = parseEventDate(event.dateISO).getTime() < today.getTime();
+
+      return {
+        "@type": "MusicEvent",
+        name: event.title,
+        startDate: event.dateISO,
+        eventStatus: isPastShow
+          ? "https://schema.org/EventCompleted"
+          : "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        image: [event.imageSrc],
+        location: {
+          "@type": "Place",
+          name: event.location,
+          address: event.location,
+        },
+        performer: {
+          "@type": "MusicGroup",
+          name: "NIRMATA",
+        },
+        offers: {
+          "@type": "Offer",
+          url: event.ticketUrl ?? event.detailsUrl,
+          availability: isPastShow
+            ? "https://schema.org/SoldOut"
+            : "https://schema.org/InStock",
+        },
+      };
+    }),
+  };
+
   return (
     <div className="min-h-screen bg-[#121212] text-[#e0e0e0]">
       {/* Cookie Consent Banner */}
@@ -371,41 +498,203 @@ export default function Home() {
       </section>
 
       {/* Events Section */}
-      <section id="events" className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-left mb-12">
-            We&apos;re playing:
-          </h2>
-          <div className="space-y-6">
-            <a
-              href="https://www.facebook.com/events/1345915849727062/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block bg-[#1a1a1a] rounded-lg overflow-hidden hover:bg-[#2a2a2a] transition-colors"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3">
-                  <Image
-                    src="/VBRF2.png"
-                    alt="Vesterbro Rock Fest"
-                    width={400}
-                    height={300}
-                    className="w-full h-48 md:h-full object-cover"
-                  />
+      <section id="events" className="relative overflow-hidden py-20 px-4">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_40%)]" />
+        <div className="relative mx-auto max-w-5xl">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(eventsStructuredData),
+            }}
+          />
+          <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h2 className="text-4xl font-bold tracking-tight text-left">
+              Concerts
+            </h2>
+            <p className="text-sm uppercase tracking-[0.2em] text-white/70">
+              Live dates and tickets
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            <div>
+              <h3 className="mb-4 text-xl font-semibold uppercase tracking-[0.16em] text-white/80">
+                Upcoming
+              </h3>
+              {upcomingEvents.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-8 text-center">
+                  <p className="text-lg font-semibold text-white">
+                    No upcoming concerts yet.
+                  </p>
+                  <p className="mt-2 text-white/70">
+                    Follow us on social channels for the next announcement.
+                  </p>
                 </div>
-                <div className="md:w-2/3 p-6">
-                  <h3 className="text-2xl font-bold mb-4">
-                    Vesterbro Rock Fest
-                  </h3>
-                  <p className="mb-2">
-                    <strong>Date:</strong> March 15, 2025
-                  </p>
-                  <p>
-                    <strong>Location:</strong> Studenterhuset, Copenhagen
-                  </p>
+              ) : (
+                <div className="grid gap-6">
+                  {upcomingEvents.map((event) => (
+                    <article
+                      key={`${event.title}-${event.dateISO}`}
+                      className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1f1f1f] to-[#141414] shadow-xl transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:shadow-2xl"
+                    >
+                      <div className="flex flex-col md:flex-row">
+                        <div className="relative md:w-2/5">
+                          <Image
+                            src={event.imageSrc}
+                            alt={event.title}
+                            width={600}
+                            height={400}
+                            className="h-56 w-full object-cover transition duration-500 group-hover:scale-105 md:h-full"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                        </div>
+
+                        <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
+                          <div className="space-y-4">
+                            <span className="inline-flex w-fit rounded-full bg-emerald-400/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-200">
+                              Upcoming
+                            </span>
+                            <h4 className="text-2xl font-bold text-white sm:text-3xl">
+                              {event.title}
+                            </h4>
+                            <div className="space-y-2 text-base text-white/85">
+                              <p>
+                                <span className="font-semibold text-white">
+                                  Date:
+                                </span>{" "}
+                                <time dateTime={event.dateISO}>
+                                  {event.displayDate}
+                                </time>
+                              </p>
+                              <p>
+                                <span className="font-semibold text-white">
+                                  Location:
+                                </span>{" "}
+                                {event.location}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="mt-6 space-y-3">
+                            <div className="flex flex-wrap gap-2">
+                              <a
+                                href={event.ticketUrl ?? event.detailsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex rounded-md border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                              >
+                                Buy tickets
+                              </a>
+                              <a
+                                href={event.detailsUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex rounded-md border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                              >
+                                Event details
+                              </a>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2 text-sm">
+                              <span className="uppercase tracking-[0.16em] text-white/60">
+                                Add to calendar:
+                              </span>
+                              <a
+                                href={getGoogleCalendarUrl(event)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-md border border-white/15 px-3 py-1.5 text-white/90 transition hover:border-white/35 hover:bg-white/10"
+                              >
+                                Google
+                              </a>
+                              <a
+                                href={getICSFileUrl(event)}
+                                download={`${slugify(event.title)}-${event.dateISO}.ics`}
+                                className="rounded-md border border-white/15 px-3 py-1.5 text-white/90 transition hover:border-white/35 hover:bg-white/10"
+                              >
+                                Apple
+                              </a>
+                              <a
+                                href={getICSFileUrl(event)}
+                                download={`${slugify(event.title)}-${event.dateISO}.ics`}
+                                className="rounded-md border border-white/15 px-3 py-1.5 text-white/90 transition hover:border-white/35 hover:bg-white/10"
+                              >
+                                ICS
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {pastEvents.length > 0 && (
+              <div>
+                <h3 className="mb-4 text-xl font-semibold uppercase tracking-[0.16em] text-white/80">
+                  Past shows
+                </h3>
+                <div className="grid gap-6">
+                  {pastEvents.map((event) => (
+                    <article
+                      key={`${event.title}-${event.dateISO}`}
+                      className="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1a1a1a] to-[#121212] shadow-lg"
+                    >
+                      <div className="flex flex-col md:flex-row">
+                        <div className="relative md:w-2/5">
+                          <Image
+                            src={event.imageSrc}
+                            alt={event.title}
+                            width={600}
+                            height={400}
+                            className="h-48 w-full object-cover opacity-80 md:h-full"
+                          />
+                        </div>
+                        <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
+                          <div className="space-y-4">
+                            <span className="inline-flex w-fit rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/75">
+                              Past show
+                            </span>
+                            <h4 className="text-2xl font-bold text-white sm:text-3xl">
+                              {event.title}
+                            </h4>
+                            <div className="space-y-2 text-base text-white/85">
+                              <p>
+                                <span className="font-semibold text-white">
+                                  Date:
+                                </span>{" "}
+                                <time dateTime={event.dateISO}>
+                                  {event.displayDate}
+                                </time>
+                              </p>
+                              <p>
+                                <span className="font-semibold text-white">
+                                  Location:
+                                </span>{" "}
+                                {event.location}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="mt-6">
+                            <a
+                              href={event.detailsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex rounded-md border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+                            >
+                              Event details
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </div>
-            </a>
+            )}
           </div>
         </div>
       </section>
